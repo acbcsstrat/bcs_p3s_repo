@@ -98,7 +98,10 @@
                                                         <td class="t-data__td t-data__td--sm sticky-td">
                                                             <a class="t-data__a" data-ng-bind="patent.epApplicationNumber" data-ng-attr-id="{{patent.patentID}}"></a>
                                                         </td>
-                                                        <td class="t-data__td t-data__td--sm sticky-td" data-ng-bind="patent.formalityAvailable">
+                                                        <td class="t-data__td t-data__td--sm sticky-td">
+                                                            <span data-ng-if="patent.formalityAvailable == 'epct'">Euro-PCT</span>
+                                                            <span data-ng-if="patent.formalityAvailable == 'postvalidation' || patent.formalityAvailable == 'postgrant'">----</span>
+                                                            <span class="text-capitalize" data-ng-if="patent.formalityAvailable !== 'postvalidation' && patent.formalityAvailable !== 'postgrant' && patent.formalityAvailable !== 'epct'">{{patent.formalityAvailable}}</span>                                                            
                                                         </td>
                                                         <td class="t-data__td t-data__td--sm sticky-td">
                                                             <button class="btn btn--bordered btn-underlined txt-phase-green font-weight-bold" data-ng-click="$ctrl.formalitySelect(patent)" data-ng-disabled="patent.selectedForEnquiry">Add</button>
