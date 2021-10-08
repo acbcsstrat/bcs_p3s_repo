@@ -30,39 +30,6 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	var latestFileUploaded;
 	var assistedFormaltyAgreement = false; //used for displaying modal the one time
 
-
-
- 	//entireSupportEnquiry 
-
- 	//needs to hold array of all objects ready to sent to BE
- 	//items need to be updated if user edits individualCase
- 	//items need to be deleated if user requests they are deleted
-
-
- 	//individualCase
- 	//needs to create new Object that holds the individualCase property ready to be pushed to entireSupportEnquiry ready to submission
- 	//case needs to be editable
- 	//needs to check if duplicates in current individualCase
- 	//needs to check if duplicates in the entireSupprtEnquiry
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	function fetchPatents(cat) {
 
 		SupportService.requestSpecificPatents(cat)
@@ -403,6 +370,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
             	this.phoneNumber = $scope.ppDetails.partnerPhone;
             	this.applicationNo = patent.epApplicationNumber;
             	this.formalityType = patent.formalityAvailable;
+            	this.assistedFiling = vm.assistedFiling;
 
             	if(type == 'edit') {
             		var findCase = $scope.allEnquiryCases.find(function(x){

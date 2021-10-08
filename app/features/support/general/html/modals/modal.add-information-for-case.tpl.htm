@@ -3,30 +3,40 @@
     <p class="font-h2 font-weight-bold m-b-sm">Support details</p>
     <p class="font-h3 m-b-sm">Application No.: <span class="font-weight-bold">{{$ctrl.applicationNo}}</span></p>
     <p class="font-h3 m-b-sm">Formality type: <span class="font-weight-bold text-capitalize">{{$ctrl.formalityType}}</span></p>
-    <textarea name="message" id="message" class="form-control br-1 m-b-sm" rows="10" data-ng-model="caseFormData.message" maxlength="5000" placeholder="Message.." validate-text-field required></textarea>
-    <div class="form-group row">
-        <div class="col-md-8">
-            <p class="font-h4 font-weight-bold m-b-xs">Supporting documents</p>
-            <p class="font-body">If you have any documents that will help our team with your enquiry, please upload them here.</p>
-            <div  class="m-t-xs" data-ng-if="caseFormData.uploadedDocs.length > 0">                            
-                <p class="font-body m-b-xs">Files uploaded:</p>
-                <div data-ng-repeat="file in caseFormData.uploadedDocs" class="btn btn--lg btn--plain br-1 btn-file-upload m-r-sm" data-ng-click="removeSpecificFile(file.name)">
-                    <span class="m-r-sm" title="{{file.name}}">{{file.name}}</span>
-                    <span ><i class="fas fa-times fa-lg action-icon btn-close"></i></span>
+    <form name="caseDetailsForm" novalidate>    
+        <textarea name="message" id="message" class="form-control br-1 m-b-sm" rows="10" data-ng-model="caseFormData.message" maxlength="5000" placeholder="Message.." validate-text-field data-ng-required="!$ctrl.assistedFiling"></textarea>
+        <div class="form-group row">
+            <div class="col-md-8">
+                <p class="font-h4 font-weight-bold m-b-xs">Supporting documents</p>
+                <p class="font-body">If you have any documents that will help our team with your enquiry, please upload them here.</p>
+                <div  class="m-t-xs" data-ng-if="caseFormData.uploadedDocs.length > 0">                            
+                    <p class="font-body m-b-xs">Files uploaded:</p>
+                    <div data-ng-repeat="file in caseFormData.uploadedDocs" class="btn btn--lg btn--plain br-1 btn-file-upload m-r-sm" data-ng-click="removeSpecificFile(file.name)">
+                        <span class="m-r-sm" title="{{file.name}}">{{file.name}}</span>
+                        <span ><i class="fas fa-times fa-lg action-icon btn-close"></i></span>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div> 
-    <div class="row m-t-md">
-        <div class="col-md-6 col-xl-6 text-left"><!--fileStore.file-->
-            <input type="file" name="uploadedDocs" id="uploadedDocs" class="d-none" data-ng-model="caseFormData.files" support-file-upload onchange="angular.element(this).scope().getFileDetails(this, true)" accept=".pdf, .PDF, .docx, .DOCX, .png, .PNG, .gif, .GIF, ,.jpg, .JPG, .jpeg, .JPEG, .pptx, .PPTX, .csv, .CSV, .xlsx, .XLSX, .zip, .ZIP" multiple>
-            <label for="uploadedDocs" class="btn btn--lg pill-radius btn--plain">Attach file(s)</label>
-         
-        </div>
-        <div class="col-md-6 col-xl-6 text-right">
-            <button type="submit" class="btn btn--green btn--lg pill-radius" data-ng-click="$ctrl.add(caseFormData, patent)">
-                Add
-            </button>
+        </div> 
+        <div class="form-group row"  data-ng-if="caseDetailsForm.uploadedDocs.$error.validfile">
+            <div class="col-md-12 col-xl-7m-b-sm">
+                <p class="txt-phase-red font-body" data-ng-show="fileStore.maxSizeError">You cannot upload a document with a file size of 0KB.</p>
+                <div ng-messages="caseDetailsForm.uploadedDocs.$error" data-ng-if="caseDetailsForm.uploadedDocs.$error.validfile">
+                    <p class="txt-phase-red m-t-xs" ng-message="validfile">Invalid file format uploaded. Only the following file formats are permitted (not case sensitive): .pdf, .docx, .png, .gif, .jpg, .jpeg, .pptx, .csv, .xlsx, .zip</p> 
+                </div>   
+            </div>              
         </div>        
-    </div> 
+        <div class="row m-t-md">
+            <div class="col-md-6 col-xl-6 text-left"><!--fileStore.file-->
+                <input type="file" name="uploadedDocs" id="uploadedDocs" class="d-none" data-ng-model="caseFormData.files" support-file-upload onchange="angular.element(this).scope().getFileDetails(this, true)" accept=".pdf, .PDF, .docx, .DOCX, .png, .PNG, .gif, .GIF, ,.jpg, .JPG, .jpeg, .JPEG, .pptx, .PPTX, .csv, .CSV, .xlsx, .XLSX, .zip, .ZIP" multiple>
+                <label for="uploadedDocs" class="btn btn--lg pill-radius btn--plain">Attach file(s)</label>
+             
+            </div>
+            <div class="col-md-6 col-xl-6 text-right">
+                <button type="submit" class="btn btn--green btn--lg pill-radius" data-ng-disabled="caseDetailsForm.$invalid" data-ng-click="$ctrl.add(caseFormData, patent)">
+                    Add
+                </button>
+            </div>        
+        </div> 
+    </form>
 </div>
