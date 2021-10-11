@@ -105,9 +105,40 @@
 						<div class="d-flex flex-column flex-grow-1 modal-overview__view">
 							<div class=" p-t-4 p-r-3 p-l-3 ">
 								<div class="row">
-									<div class="col-md-6 d-flex align-items-center">
+									<div class="col-md-6 col-xl-6 d-flex align-items-center">
 										<p class="font-h3 font-weight-bold">Application Number: <span class="font-weight-normal">{{$ctrl.patent.ep_ApplicationNumber}}</span></p>
 									</div>
+									<div class="col-md-6 col-xl-6 d-flex align-items-center">
+					                    <md-menu>
+					                        <md-button data-ng-click="$ctrl.openSupportMenu($mdMenu, $event);">
+					                            <span class="icon-text">Request support</span>              
+					                        </md-button>
+					                        <md-menu-content data-ng-if="$ctrl.multipleFormalities">
+										        <md-menu-item>
+										          	<md-button data-ng-click="$ctrl.selectMultiFormality('renewal')">
+									<!-- 	            	<md-icon md-svg-icon="call:dialpad" md-menu-align-target=""></md-icon> -->
+										            	Renewal
+										          	</md-button>
+										        </md-menu-item>
+										        <md-menu-item>
+										          	<md-button data-ng-click="$ctrl.selectMultiFormality('grant')">
+								<!-- 		            	<md-icon md-svg-icon="call:voicemail"></md-icon> -->
+										            	Grant
+										          	</md-button>
+										        </md-menu-item>
+					                        </md-menu-content>
+<!-- 					                        <md-menu-content>
+					                        </md-menu-content>	 -->
+					                        <md-menu-content data-ng-if="$ctrl.displaySupportTypes">
+										        <md-menu-item data-ng-repeat="type in $ctrl.supportType">
+										          	<md-button data-ng-click="$ctrl.selectSupportType(type)">
+										      <!--       <md-icon ></md-icon>
+ -->										            {{type}}
+										          	</md-button>
+										        </md-menu-item>
+					                        </md-menu-content>					                        
+					                    </md-menu>										
+									</div>									
 							        <div class="col-md-12">
 							        	<div class="border-grey-xs--btm m-t-sm m-b-sm"></div>
 							        </div>

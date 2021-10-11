@@ -19,9 +19,133 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
     $scope.showOptions = false;
     $scope.activeLeft = 0;
     $scope.renewalHistory = null;
+    vm.supportType = ['Intellectual Property', 'Assisted Formality Filing', 'WebApp Technical', 'Other'];
 
     var chartTimeout;
     var originatorEv;
+    vm.openSupportMenu = openSupportMenu;
+    vm.selectSupportType = selectSupportType;
+    vm.selectMultiFormality = selectMultiFormality;
+
+    var requestObj = {};
+
+    var assistedOkStatuses = ['Epct available', 'Epct saved', 'Epct being generated', 'Grant available', 'Grant saved', 'validationAvailable', 'quotePending',  'quoteProvided'];
+
+    function findCommonElements3(arr1, arr2) {
+        return arr1.some(item => arr2.includes(item))
+    }
+
+    function openSupportMenu($mdMenu, ev) {
+
+        if(caseSelected.p3sServicesWithFees.length > 1) {
+
+            var mappedStatuses = caseSelected.p3sServicesWithFees.map(function(item){
+                return item.serviceStatus;
+            })
+
+            if(!findCommonElements3(mappedStatuses, assistedOkStatuses)) {
+                var index = vm.supportType.indexOf('Assisted Formality Filing');
+                vm.supportType.splice(index, 1);
+            }
+            requestObj.formalityType = caseSelected.p3sServicesWithFees[0].serviceType;
+            vm.multipleFormalities = true;
+            vm.displaySupportTypes = false;
+
+        } else {
+
+            var formalityStatus = caseSelected.p3sServicesWithFees[0].serviceStatus;
+            var assistedAvailable = assistedOkStatuses.some(function(item){
+                return item == formalityStatus;
+            })
+
+            if(!assistedAvailable) {
+                var index = vm.supportType.indexOf('Assisted Formality Filing');
+                vm.supportType.splice(index, 1);
+            }
+            requestObj.formalityType = caseSelected.p3sServicesWithFees[0].serviceType;
+            vm.multipleFormalities = false;
+            vm.displaySupportTypes = true;
+        }
+        originatorEv = ev;
+        $mdMenu.open(ev);
+    }
+
+    function confirmRequestForSupport(obj) {
+        var modalInstance = $uibModal.open({
+            template: require('html-loader!../html/modals/modal.confirm-requesting-assitance.tpl.htm'),
+            scope: $scope,
+            controllerAs:'$ctrl',
+            backdrop: 'static',
+            keyboard: false,
+            controller: ['$uibModalInstance', function($uibModalInstance) {
+
+                this.supportType = obj.supportType;
+                this.epApplicationNumber = obj.epApplicationNumber;
+                
+                this.cancel = function () {
+                    $uibModalInstance.close();
+                };
+
+                this.confirm = function () {
+                    $state.go('general-support', {supportObj: obj});
+                };                    
+
+            }]
+
+
+        })
+    }
+
+    function selectSupportType(type) {
+
+        if(type !== 'Assisted Formality Filing') {
+            requestObj.supportType = type;
+            requestObj.epApplicationNumber = caseSelected.ep_ApplicationNumber;
+            confirmRequestForSupport(requestObj)
+        } else {
+            var modalInstance = $uibModal.open({
+                template: require('html-loader!../html/modals/modal.assisted-formality-details.tpl.htm'),
+                scope: $scope,
+                controllerAs:'$ctrl',
+                backdrop: 'static',
+                keyboard: false,
+                windowClass: 'wide-modal',
+                controller: ['$uibModalInstance', function($uibModalInstance) {
+                    
+                    this.cancel = function () {
+                        $uibModalInstance.close(false);
+                    };
+
+                    this.confirm = function () {
+                        $uibModalInstance.close(true);
+                    };                    
+
+                    this.feeOject = {                           
+                        'epctSupportFee': 300,
+                        'grantSupportFee': 200,
+                        'valAnySupportFee': 150,
+                        'valLondonSupportFee': 100,
+                    }
+
+                }]
+
+
+            })
+
+            modalInstance.result.then(function(x){
+                if(x) {
+                    requestObj.supportType = type;
+                    confirmRequestForSupport(requestObj)
+                }
+            })
+        }
+    }
+
+    function selectMultiFormality(type) {
+        requestObj.formalityType = type;
+        vm.multipleFormalities = false;
+        vm.displaySupportTypes = true;
+    }
 
     function processView(tab, index, chart) {
         if((tab == 'reminders' && $scope.validationNotification) || (tab == 'costchart' && $scope.validationNotification) || (tab == 'fxchart' && $scope.validationNotification)) { return; }

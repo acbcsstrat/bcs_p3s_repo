@@ -1,0 +1,27 @@
+<div class="modal-header d-flex flex-column align-items-stretch">
+	<div class="row">
+		<div class="col-md-12 col-xl-12">
+			<p class="font-h3 m-b-sm font-weight-bold">Requesting assistance for {{$ctrl.epApplicationNumber}}</span></p>
+			<p class="m-b-xs">You have selected 'Request support' for this case and selected support category:</p>
+			<ul>
+				<li>{{$ctrl.supportType}}</li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12 col-xl-12">
+			<p class="m-b-xs">If you are happy with this selection, click 'Confirm', you will automatically be navigated to the support form that is pre-populated with this cases information. Provide the required details and your support enquiry can be submitted to one of our professional team members.</p>
+			<p>If you do not require support for this case than click 'Cancel'</p>
+		</div>	
+	</div>
+
+	<div class="row d-flex m-t-sm ">
+		<div class="col-md-12 col-xl-12 text-center">
+		    <div class="d-flex justify-content-center">    	
+			    <button class="btn btn--lg btn--red pill-radius m-r-sm" data-ng-click="$ctrl.cancel()">Cancel</button>
+			    <button class="btn btn--lg btn--green pill-radius" data-ng-click="$ctrl.confirm()">Confirm</button>
+		    </div>
+		</div>
+	</div>
+</div>
