@@ -13,21 +13,41 @@
                         <p class="font-body m-b-xs">Is your enquiry in relation to specific case(s)?</p>
                         <div class="form-check form-check-inline">
                             <label for="specificCase">Yes</label>
-                            <input type="radio" class="m-l-xs m-r-sm" name="specificCase" data-ng-model="specificCase.yes" data-ng-click="$ctrl.specificCaseCheck('yes', $ctrl.caseSpecific, specificCase.yes)" data-ng-disabled="$ctrl.fetchingPatents" value="false"> <!--ng-required if caseCheck == 'yes'-->
+                            <input type="checkbox" class="m-l-xs m-r-sm" name="specificCase" 
+
+                            ng-model="specificCase" 
+                            ng-true-value="'yes'" 
+                            data-ng-checked="specificCase == 'yes'" 
+
+                            data-ng-change="$ctrl.specificCaseCheck('yes', $ctrl.caseSpecific, specificCase.yes)" 
+                            data-ng-disabled="$ctrl.fetchingPatents"> <!--ng-required if caseCheck == 'yes'-->
                         </div>
 
                         <div class="form-check form-check-inline">
                             <label for="notSpecificCase">No</label>
-                            <input type="radio" class="m-l-xs m-r-sm" name="specificCase" data-ng-model="specificCase.no" data-ng-click="$ctrl.specificCaseCheck('no', $ctrl.caseSpecific, specificCase.no)" data-ng-disabled="$ctrl.fetchingPatents" value="false">
+                            <input type="checkbox" class="m-l-xs m-r-sm" name="specificCase" 
+
+                            ng-model="specificCase"
+                            ng-true-value="'no'" 
+                            data-ng-checked="specificCase == 'no'" 
+
+                            data-ng-change="$ctrl.specificCaseCheck('no', $ctrl.caseSpecific, specificCase.no)" 
+                            data-ng-disabled="$ctrl.fetchingPatents">
                         </div>
                         <div class="form-check form-check-inline">
                             <label for="unsureSpecificCase">Unsure</label>
-                            <input type="radio" class="m-l-xs" name="specificCase" data-ng-model="specificCase.unsure" data-ng-click="$ctrl.specificCaseCheck('unsure', $ctrl.caseSpecific, specificCase.unsure)" data-ng-disabled="$ctrl.fetchingPatents" value="false">
+                            <input type="checkbox" class="m-l-xs" name="specificCase"
+
+                            ng-model="specificCase"
+                            ng-true-value="'unsure'" 
+                            data-ng-checked="specificCase == 'unsure'" 
+
+                            data-ng-change="$ctrl.specificCaseCheck('unsure', $ctrl.caseSpecific, specificCase.unsure)" data-ng-disabled="$ctrl.fetchingPatents">
                         </div>
                     </div>
                 </div>
 
-                <div data-ng-show="$ctrl.caseSpecific == 'yes' && $ctrl.optionSelected">
+                <div data-ng-show="specificCase == 'yes' && $ctrl.optionSelected">
                     <form name="specificSupportForm" novalidate>
                         <div class="form-group row  m-b-md">
                             <div class="col-md-6 col-xl-5">
@@ -83,7 +103,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody class="sticky-tbody">
-                                                        <tr data-ng-repeat="patent in $ctrl.patents | orderBy:$ctrl.propertyName:$ctrl.reverse as Result" class="t-data__row t-data__row--select" data-ng-class="{'disabled-row': patent.selectedForEnquiry}">
+                                                        <tr data-ng-repeat="patent in $ctrl.patents | orderBy:$ctrl.propertyName:$ctrl.reverse as Result" class="t-data__row t-data__row--select" data-ng-class="{'disabled-row': patent.selectedForEnquiry}" >
                                                             <td class="t-data__td t-data__td--sm sticky-td">
                                                                 <a class="t-data__a" data-ng-bind="patent.epApplicationNumber" data-ng-attr-id="{{patent.patentID}}"></a>
                                                             </td>
@@ -93,7 +113,7 @@
                                                                 <span class="text-capitalize" data-ng-if="patent.formalityAvailable !== 'postvalidation' && patent.formalityAvailable !== 'postgrant' && patent.formalityAvailable !== 'epct'">{{patent.formalityAvailable}}</span>                                                            
                                                             </td>
                                                             <td class="t-data__td t-data__td--sm sticky-td">
-                                                                <button class="btn btn--bordered btn-underlined txt-phase-green font-weight-bold" data-ng-click="$ctrl.formalitySelect(patent)" data-ng-disabled="patent.selectedForEnquiry">Add</button>
+                                                                <button class="btn btn--bordered btn-underlined txt-phase-green font-weight-bold" data-ng-click="$ctrl.formalitySelect(patent)" id="{{patent.formalityAvailable + patent.patentID}}" data-ng-disabled="patent.selectedForEnquiry">Add</button>
                                                             </td>                                            
                                                         </tr>
                                                     </tbody>  
@@ -183,9 +203,8 @@
                     </form>
                 </div>
 
-
                 <!--non case specific form-->
-                <div data-ng-show="($ctrl.caseSpecific == 'no' || $ctrl.caseSpecific == 'unsure') && $ctrl.optionSelected">
+                <div data-ng-show="(specificCase == 'no' || specificCase == 'unsure') && $ctrl.optionSelected">
                 	<form name="supportForm" id="supportForm" data-ng-init="" data-ng-model="$ctrl.supportForm" novalidate>
                         <div class="form-group row">
                     		<div class="col-md-7 col-xl-6">

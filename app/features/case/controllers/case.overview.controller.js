@@ -37,13 +37,17 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
 
     function openSupportMenu($mdMenu, ev) {
 
+        var pendingAssisted = caseSelected.p3sServicesWithFees.some(function(item){
+            return item.supportRequestedBy !== null;
+        })        
+        
         if(caseSelected.p3sServicesWithFees.length > 1) {
 
             var mappedStatuses = caseSelected.p3sServicesWithFees.map(function(item){
                 return item.serviceStatus;
             })
 
-            if(!findCommonElements3(mappedStatuses, assistedOkStatuses)) {
+            if(!findCommonElements3(mappedStatuses, assistedOkStatuses) ) {
                 var index = vm.supportType.indexOf('Assisted Formality Filing');
                 vm.supportType.splice(index, 1);
             }
@@ -58,10 +62,11 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
                 return item == formalityStatus;
             })
 
-            if(!assistedAvailable) {
+            if(!assistedAvailable || pendingAssisted) { //if status is not eligble for assisted formality filing || 
                 var index = vm.supportType.indexOf('Assisted Formality Filing');
                 vm.supportType.splice(index, 1);
             }
+
             requestObj.formalityType = caseSelected.p3sServicesWithFees[0].serviceType;
             vm.multipleFormalities = false;
             vm.displaySupportTypes = true;
@@ -71,6 +76,7 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
     }
 
     function confirmRequestForSupport(obj) {
+
         var modalInstance = $uibModal.open({
             template: require('html-loader!../html/modals/modal.confirm-requesting-assitance.tpl.htm'),
             scope: $scope,
@@ -92,15 +98,15 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
 
             }]
 
-
         })
     }
 
     function selectSupportType(type) {
 
+        requestObj.supportType = type;
+        requestObj.epApplicationNumber = caseSelected.ep_ApplicationNumber;
+        requestObj.patentID = caseSelected.patentID;            
         if(type !== 'Assisted Formality Filing') {
-            requestObj.supportType = type;
-            requestObj.epApplicationNumber = caseSelected.ep_ApplicationNumber;
             confirmRequestForSupport(requestObj)
         } else {
             var modalInstance = $uibModal.open({

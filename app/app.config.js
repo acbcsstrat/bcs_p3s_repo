@@ -538,6 +538,9 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
         template: require('html-loader!./features/support/general/html/general-support.tpl.htm'),
         controller: 'GeneralSupportController',
         controllerAs: '$ctrl',
+        params: {
+            supportObj: null
+        },        
         lazyLoad: function($transition$) {
             const $ocLazyLoad = $transition$.injector().get("$ocLazyLoad");
             

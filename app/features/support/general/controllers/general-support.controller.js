@@ -29,37 +29,71 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	var selectedPatent;
 	var latestFileUploaded;
 	var assistedFormaltyAgreement = false; //used for displaying modal the one time
+	$scope.specificCase = {};
+	// vm.specificSelectValue = '';
+	var caseOverViewSupport = false;
+
+	function init() {
+		if($stateParams.supportObj) {
+			caseOverViewSupport = true;
+			$scope.specificCase = 'yes';
+			vm.optionSelected = true;
+			$scope.caseFormData.category = $stateParams.supportObj.supportType;
+			vm.caseSpecificCategory = $stateParams.supportObj.supportType;
+			$timeout(function(){
+				$scope.caseFormData.category = $stateParams.supportObj.supportType;
+			})
+
+		}
+	}
+
+	init();
 
 	function fetchPatents(cat) {
 
 		SupportService.requestSpecificPatents(cat)
 		.then(
 			function(response){
+
 				vm.fetchingPatents = false;
-				if(cat == 'Assisted Formality Filing' && !assistedFormaltyAgreement && response.length > 0) {
-					assistedFormaltyAgreement = true;
-			        var modalInstance = $uibModal.open({
-			            template: require('html-loader!../html/modals/modal.assisted-formality-details.tpl.htm'),
-			            scope: $scope,
-			            controllerAs:'$ctrl',
-			            backdrop: 'static',
-			            keyboard: false,
-			            windowClass: 'wide-modal',
-			            controller: ['$uibModalInstance', function($uibModalInstance) {
-			                
-			                this.dismissModal = function () {
-			                    $uibModalInstance.close(false);
-			                };
+				if($stateParams.supportObj) {
 
-			                this.feeOject = {		                	
-								'epctSupportFee': 300,
-								'grantSupportFee': 200,
-								'valAnySupportFee': 150,
-								'valLondonSupportFee': 100,
-			                }
+					if($stateParams.supportObj.formalityType == 'Euro-PCT') {
+						$stateParams.supportObj.formalityType = 'epct';
+					}
 
-			            }]
-			        })
+					var id = '#' + $stateParams.supportObj.formalityType + $stateParams.supportObj.patentID;
+
+				    $timeout(function() {
+					    angular.element(document.querySelector(id)).triggerHandler('click');
+				    });
+
+				} else {				
+					if(cat == 'Assisted Formality Filing' && !assistedFormaltyAgreement && response.length > 0 && !$stateParams.supportObj) {
+						assistedFormaltyAgreement = true;
+				        var modalInstance = $uibModal.open({
+				            template: require('html-loader!../html/modals/modal.assisted-formality-details.tpl.htm'),
+				            scope: $scope,
+				            controllerAs:'$ctrl',
+				            backdrop: 'static',
+				            keyboard: false,
+				            windowClass: 'wide-modal',
+				            controller: ['$uibModalInstance', function($uibModalInstance) {
+				                
+				                this.dismissModal = function () {
+				                    $uibModalInstance.close(false);
+				                };
+
+				                this.feeOject = {		                	
+									'epctSupportFee': 300,
+									'grantSupportFee': 200,
+									'valAnySupportFee': 150,
+									'valLondonSupportFee': 100,
+				                }
+
+				            }]
+				        })
+					}
 				}
 
 				vm.patents = response.patentEnquiries;
@@ -75,6 +109,10 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	function checkSpecificType(newValue, oldValue) { //category check 
 
 		if(newValue == oldValue) return;
+
+		if(newValue == undefined) { //if caseoverview support
+			newValue = $stateParams.supportObj.supportType;
+		}
 
 		vm.assistedFiling = newValue == 'Assisted Formality Filing' ? true : false
 		vm.categorySelected = true;
@@ -120,9 +158,14 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
     }
 
     function resetFormData(allCases) {
+
     	$scope.caseFormData = {};
     	$scope.caseFormData.uploadedDocs = []; //reset current case file as it has been added to allEnquiryCases
+
     	if(vm.caseSpecificCategory) {
+    		if($stateParams.supportObj) {
+    			$scope.caseFormData.category = $stateParams.supportObj.supportType; 
+    		}
     		$scope.caseFormData.category = vm.caseSpecificCategory;
     	}
 
@@ -299,7 +342,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 		            }]
 		        });
 		   	} else {
-		   		console.log('file hit 1', caseSpecific)
+
 		   		if(e.files[i].size > 0 && validFormats.includes(ext)) {
 
 			    	if(caseSpecific) {
@@ -325,7 +368,6 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 			   			})()
 
 			    	} else {
-			    		console.log('files should be uploaded')
 			   			vm.files.push(e.files[i]) //Required for no case specific cases				   		
 			    	}
 			    }
@@ -379,7 +421,6 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
             		})
         			$scope.caseFormData = findCase;
             	}
-
 
                 this.dismissModal = function () {
                     $uibModalInstance.close('notAdded');
@@ -477,7 +518,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 			        });	
 
 			        modalInstance.result.then(function(){
-			        	$state.go($state.current, {}, {reload: true});
+			        	$state.go($state.current, {supportObj: null}, {reload: true});
 			        })
 				},
 				function(errResponse){
