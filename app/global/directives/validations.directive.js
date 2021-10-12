@@ -374,6 +374,22 @@ function fileModel($parse) {
     };
 }
 
+function stopPropagation() {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attr) {
+            console.log('hit')
+            console.log('attr : ', attr)
+            console.log('attr.stopEvent : ', attr.stopPropagation)
+            if(attr && attr.stopPropagation)
+                element.bind(attr.stopPropagation, function (e) {
+                    console.log(e)
+                    e.stopPropagation();
+                });
+        }
+    };
+}
+
 export default angular.module('directives.validation-rules', [])
     .directive('fileModel', fileModel)
     .directive('validateName', validateName)
@@ -389,4 +405,5 @@ export default angular.module('directives.validation-rules', [])
     .directive('uiSelectRequired', uiSelectRequired)
     .directive('validateTextField', validateTextField)
     .directive('supportFileUpload', supportFileUpload)
+    .directive('stopPropagation', stopPropagation)
     .name;

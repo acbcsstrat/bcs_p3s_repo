@@ -143,6 +143,25 @@
         }
     }
 
+    &.btn-md-list {
+        background: none;
+        border: 0;
+        width: 100%;
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        &:focus {
+            outline: 0;
+        }
+        &:hover {
+            background: $grey;
+        }             
+    }
+
     &.btn-underlined {
         text-decoration: underline;
         vertical-align: baseline;
@@ -309,4 +328,16 @@
         transition-delay: .25s;
         text-transform: capitalize;
     }
+}
+
+
+.md-menu-close-container {    
+    position: absolute;
+    left: 5px;
+    top: 5px;
+}
+.spacer {
+    height: 60px;
+    margin: 0px 0 -55px 0;
+    background: transparent;
 }
