@@ -165,13 +165,13 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
 
                     this.confirm = function () {
                         $uibModalInstance.close(true);
-                    };                    
+                    };
 
                     this.feeOject = {                           
-                        'epctSupportFee': 300,
-                        'grantSupportFee': 200,
-                        'valAnySupportFee': 150,
-                        'valLondonSupportFee': 100,
+                        'epctSupportFee': 900,
+                        'grantSupportFee': 600,
+                        'valAnySupportFee': 300,
+                        'valLondonSupportFee': 550
                     }
 
                 }]
