@@ -77,11 +77,16 @@
                                              - No cases available for this category -
                                         </p>
                                     </div>
-                                    <div data-ng-if="$ctrl.patents.length > 0" class="col-md-6 col-xl-6">
+                                    <div data-ng-show="$ctrl.patents.length > 0" class="col-md-6 col-xl-6">
                                         <p class="font-h4 font-weight-bold m-b-xs">Cases available for <span data-ng-if="!$ctrl.assistedFiling">enquiry</span><span data-ng-if="$ctrl.assistedFiling">assisted formality filing</span></p>
                                         <p data-ng-if="$ctrl.assistedFiling" class="m-b-xs">Select below any cases you wish to request assisted formality filing for. Upon selection you will have the option to provide a message and, if required, any supporting documents.</p>
                                         <p data-ng-if="!$ctrl.assistedFiling" class="m-b-xs">Select below any cases you wish to include in your enquiry. Upon selection you will be prompted to provide a message and, if required, any supporting documents.</p>  
                                         <div class="container__scrollable-area">
+                                            <div class="row p-a-sm">
+                                                <div class="offset-md-6 col-md-6 offset-xl-6 col-xl-6">
+                                                    <input type="text" class="form-control pill-radius" data-ng-model="$ctrl.tableSearch" placeholder="Search table...">
+                                                </div>
+                                            </div>
                                             <div class="scrollable-area scrollable-area--250">
                                                 <table class="t-data support-table">
                                                     <thead>
@@ -103,7 +108,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody class="sticky-tbody">
-                                                        <tr data-ng-repeat="patent in $ctrl.patents | orderBy:$ctrl.propertyName:$ctrl.reverse as Result" class="t-data__row t-data__row--select" data-ng-class="{'disabled-row': patent.selectedForEnquiry}" >
+                                                        <tr data-ng-repeat="patent in $ctrl.patents | filter : $ctrl.tableSearch | orderBy:$ctrl.propertyName:$ctrl.reverse as Result" class="t-data__row t-data__row--select" data-ng-class="{'disabled-row': patent.selectedForEnquiry}" >
                                                             <td class="t-data__td t-data__td--sm sticky-td">
                                                                 <a class="t-data__a" data-ng-bind="patent.epApplicationNumber" data-ng-attr-id="{{patent.patentID}}"></a>
                                                             </td>

@@ -51,11 +51,11 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	init();
 
 	function fetchPatents(cat) {
-
+		
 		SupportService.requestSpecificPatents(cat)
 		.then(
 			function(response){
-				console.log('response : ', response)
+
 				vm.fetchingPatents = false;
 				if($stateParams.supportObj) {
 
@@ -70,10 +70,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 				    });
 
 				} else {				
-					console.log(cat == 'Assisted Formality Filing')
-					console.log(!assistedFormaltyAgreement)
-					console.log(response.length > 0)
-					console.log(!$stateParams.supportObj)
+
 					if(cat == 'Assisted Formality Filing' && !assistedFormaltyAgreement && response.patentEnquiries.length > 0 && !$stateParams.supportObj) {
 						assistedFormaltyAgreement = true;
 				        var modalInstance = $uibModal.open({
@@ -118,6 +115,8 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 		if(newValue == undefined) { //if caseoverview support
 			newValue = $stateParams.supportObj.supportType;
 		}
+
+		vm.tableSearch = '';
 
 		vm.assistedFiling = newValue == 'Assisted Formality Filing' ? true : false
 		vm.categorySelected = true;
@@ -562,11 +561,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 
 			for (var i in vm.files) {
 	            formData.append("uploadedDocs", vm.files[i]);
-	        }
-
-			// for(var pair of formData.entries()) {
-			//    console.log(pair[0]+ ', '+ pair[1]);
-			// }		
+	        }	
 
 			SupportService.requestNonSpecificSupport(formData, config)
 			.then(
