@@ -34,6 +34,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	var caseOverViewSupport = false;
 
 	function init() {
+		$scope.phoneNumber = $scope.ppDetails.partnerPhone;
 		if($stateParams.supportObj) {
 			caseOverViewSupport = true;
 			$scope.specificCase = 'yes';
@@ -54,7 +55,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 		SupportService.requestSpecificPatents(cat)
 		.then(
 			function(response){
-
+				console.log('response : ', response)
 				vm.fetchingPatents = false;
 				if($stateParams.supportObj) {
 

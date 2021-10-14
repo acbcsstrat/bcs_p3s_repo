@@ -108,9 +108,20 @@
                                                                 <a class="t-data__a" data-ng-bind="patent.epApplicationNumber" data-ng-attr-id="{{patent.patentID}}"></a>
                                                             </td>
                                                             <td class="t-data__td t-data__td--sm sticky-td">
-                                                                <span data-ng-if="patent.formalityAvailable == 'epct'">Euro-PCT</span>
-                                                                <span data-ng-if="patent.formalityAvailable == 'postvalidation' || patent.formalityAvailable == 'postgrant'">----</span>
-                                                                <span class="text-capitalize" data-ng-if="patent.formalityAvailable !== 'postvalidation' && patent.formalityAvailable !== 'postgrant' && patent.formalityAvailable !== 'epct'">{{patent.formalityAvailable}}</span>                                                            
+                                                                <p class="text-capitalize d-inline" data-ng-if="patent.formalityAvailable == 'epct'">Euro-PCT</p>
+                                                                <p class="text-capitalize d-inline" data-ng-if="patent.formalityAvailable == 'postvalidation' || patent.formalityAvailable == 'postgrant'">----</p>
+                                                                <p class="text-capitalize d-inline" data-ng-if="patent.formalityAvailable !== 'postvalidation' && patent.formalityAvailable !== 'postgrant' && patent.formalityAvailable !== 'epct'">{{patent.formalityAvailable}}</p>
+                                                                <div class="d-inline" data-ng-if="patent.isManualProcessing || patent.isUrgent">                                        
+                                                                    <i class="far fa-exclamation-triangle fa-lg txt-phase-amber cursor-pointer"></i>
+                                                                    <md-tooltip md-delay="200" class="mdtooltip-md" md-direction="bottom" md-z-index="99999">
+                                                                        <p class="font-body" data-ng-if="patent.isManualProcessing">
+                                                                            <span class="font-weight-bold">Manual processing: </span>This formality can only be processed offline via one of our IP profesionals. Please contact our customer support team on {{phoneNumber}}.
+                                                                        </p>
+                                                                       <p class="font-body" data-ng-if="patent.isUrgent">
+                                                                            <span class="font-weight-bold">Urgent processing: </span>It is too close to the deadline for processing this formality online. If you wish to discuss that, we recommend you call our customer support number of {{phoneNumber}}.
+                                                                        </p>                                                                        
+                                                                    </md-tooltip>            
+                                                                </div>
                                                             </td>
                                                             <td class="t-data__td t-data__td--sm sticky-td">
                                                                 <button class="btn btn--bordered btn-underlined txt-phase-green font-weight-bold" data-ng-click="$ctrl.formalitySelect(patent)" id="{{patent.formalityAvailable + patent.patentID}}" data-ng-disabled="patent.selectedForEnquiry">Add</button>
