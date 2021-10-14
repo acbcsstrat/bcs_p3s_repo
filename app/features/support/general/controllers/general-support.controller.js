@@ -70,7 +70,11 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 				    });
 
 				} else {				
-					if(cat == 'Assisted Formality Filing' && !assistedFormaltyAgreement && response.length > 0 && !$stateParams.supportObj) {
+					console.log(cat == 'Assisted Formality Filing')
+					console.log(!assistedFormaltyAgreement)
+					console.log(response.length > 0)
+					console.log(!$stateParams.supportObj)
+					if(cat == 'Assisted Formality Filing' && !assistedFormaltyAgreement && response.patentEnquiries.length > 0 && !$stateParams.supportObj) {
 						assistedFormaltyAgreement = true;
 				        var modalInstance = $uibModal.open({
 				            template: require('html-loader!../html/modals/modal.assisted-formality-details.tpl.htm'),
@@ -86,10 +90,10 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 				                };
 
 				                this.feeOject = {		                	
-									'epctSupportFee': 300,
-									'grantSupportFee': 200,
-									'valAnySupportFee': 150,
-									'valLondonSupportFee': 100,
+									'epctSupportFee': response.epctSupportFee,
+									'grantSupportFee': response.grantSupportFee,
+									'valAnySupportFee': response.valAnySupportFee,
+									'valLondonSupportFee': response.valLondonSupportFee,
 				                }
 
 				            }]

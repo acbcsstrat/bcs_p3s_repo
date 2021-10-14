@@ -170,8 +170,8 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
                     this.feeOject = {                           
                         'epctSupportFee': 900,
                         'grantSupportFee': 600,
-                        'valAnySupportFee': 300,
-                        'valLondonSupportFee': 550
+                        'valAnySupportFee': 550,
+                        'valLondonSupportFee': 300
                     }
 
                 }]
