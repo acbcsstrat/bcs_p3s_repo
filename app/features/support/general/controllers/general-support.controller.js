@@ -365,13 +365,13 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 						  	const jsonString = JSON.stringify(b64);		
 						  	newObject.fileData = jsonString;
 
-						  	$scope.caseFormData.uploadedDocs.push(newObject) //to be pushed for individualCase ADD
+						  	$scope.caseFormData.uploadedDocs.push(newObject); //to be pushed for individualCase ADD
 
 				   			$scope.$applyAsync(); //NEEDED				  	
 
 			   			}
 
-			   			asyncCall()
+			   			asyncCall();
 
 			    	} else {
 			   			vm.files.push(e.files[i]) //Required for no case specific cases				   		
