@@ -351,7 +351,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 
 			    	if(caseSpecific) {
 
-	   					(async () => {
+	   					async function asyncCall() {
 
 							var newObject  = {						
 							   	'lastModified'     : e.files[i].lastModified,
@@ -369,7 +369,9 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 
 				   			$scope.$applyAsync(); //NEEDED				  	
 
-			   			})()
+			   			}
+
+			   			asyncCall()
 
 			    	} else {
 			   			vm.files.push(e.files[i]) //Required for no case specific cases				   		
