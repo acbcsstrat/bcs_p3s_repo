@@ -24,6 +24,14 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
 
     function init() {
 
+        // vm.pendingAssisted = caseSelected.p3sServicesWithFees.some(function(item){
+        //     return item.supportRequestedBy !== null;
+        // })
+        
+        // vm.assistedAvailable = caseSelected.p3sServicesWithFees.some(function(item){
+        //     return assistedOkStatuses.includes(item.serviceStatus)
+        // })
+
         $scope.phoneNumber = $scope.ppDetails.partnerPhone;
     	vm.activeTab = 0;
 

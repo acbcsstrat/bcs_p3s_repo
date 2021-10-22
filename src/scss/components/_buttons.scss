@@ -164,7 +164,7 @@
 
     &.btn-underlined {
         text-decoration: underline;
-        vertical-align: baseline;
+        vertical-align: text-top;
         &:hover, &:focus {
             box-shadow: none;
             text-decoration: none;
@@ -194,6 +194,32 @@
     background: transparent;
     &:hover {
         text-decoration: none;
+    }
+}
+
+.directive-btn {
+    &.underlined {
+        .btn {
+            background: none;
+            text-decoration: underline;
+            vertical-align: text-top;
+            padding: 0;
+            font-weight: normal;
+            letter-spacing: 0.5px;
+            font-size: 1.2rem;
+            // -webkit-box-shadow: 0px 3px 3px 0px rgb(0 0 0 / 20%);
+            // -moz-box-shadow: 0px 3px 3px 0px rgba(0,0,0,0.2);
+            box-shadow: none;    
+            color: $green;
+            line-height: 1rem;
+            &.pill-radius {
+                border-radius: 0;
+            }
+        }
+        &:hover, &:focus {
+            box-shadow: none;
+            text-decoration: none;
+        }
     }
 }
 
