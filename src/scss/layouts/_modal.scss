@@ -150,8 +150,8 @@
     bottom: 0;
     margin: 0 auto;
     max-width: 90rem;
-    min-height: 60rem;
-    height: 96vh;
+    max-height: 96vh;
+    // height: 96vh;
     z-index: 1041;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
@@ -173,7 +173,7 @@
         max-width: 70.3rem;
         .modal-overview__view__body {
             overflow-y: scroll;
-            height: 50rem;
+            // height: 50rem;
             background: $white;          
             &::-webkit-scrollbar-thumb {
                 background: $grey; 
