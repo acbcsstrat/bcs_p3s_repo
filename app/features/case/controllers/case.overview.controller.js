@@ -14,6 +14,8 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
     vm.checkAvailableAction = checkAvailableAction;
     vm.processView = processView
     vm.openMenu = openMenu;
+    vm.pendingAssisted = null;
+    vm.assistedAvailable = null;
     $scope.notInProgress = true;
     $scope.caseoverview_tab = 'details';
     $scope.showOptions = false;
@@ -39,28 +41,15 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
 
 
         if(caseSelected.p3sServicesWithFees.length > 1) {
-            // requestObj.formalityType = caseSelected.p3sServicesWithFees[0].serviceType;
             vm.multipleFormalities = true;
             vm.displaySupportTypes = false;
 
         } else {
 
-            var formalityStatus = caseSelected.p3sServicesWithFees[0].serviceStatus;
-
-
-            var pendingAssisted = caseSelected.p3sServicesWithFees.some(function(item){
-                return item.supportRequestedBy !== null;
-            })
-
-            var assistedAvailable = assistedOkStatuses.some(function(item){
-                return item == formalityStatus;
-            })            
-
-            if(!assistedAvailable || pendingAssisted) { //if status is not eligble for assisted formality filing || 
+            if(!vm.assistedAvailable || vm.pendingAssisted) { //if status is not eligble for assisted formality filing || 
 
                 var index = vm.supportType.indexOf('Assisted Formality Filing');
                 if(index > -1) {                
-                    
                     vm.supportType.splice(index, 1);
                 }
             }
@@ -91,15 +80,15 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
                 return item.serviceStatus;
             })
 
-            var pendingAssisted = caseSelected.p3sServicesWithFees.some(function(item){
+            vm.pendingAssisted = caseSelected.p3sServicesWithFees.some(function(item){
                 return item.supportRequestedBy !== null;
             })
 
-            var assistedAvailable = assistedOkStatuses.some(function(item){
+            vm.assistedAvailable = assistedOkStatuses.some(function(item){
                 return item == formalityStatus;
             })
 
-            if(!findCommonElements3(mappedStatuses, assistedOkStatuses) || pendingAssisted) { //if assisted filing isn't available
+            if(!findCommonElements3(mappedStatuses, assistedOkStatuses) || vm.pendingAssisted) { //if assisted filing isn't available
                 var index = vm.supportType.indexOf('Assisted Formality Filing');
                 if(index > -1) { 
                     vm.supportType.splice(index, 1);
@@ -107,7 +96,7 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
             }
 
 
-            if(index < 0) { //if user has previously selected 'renewal', populate array with assisted formality filing
+            if(index < 0 && vm.assistedAvailable) { //if user has previously selected 'renewal', populate array with assisted formality filing
                 vm.supportType.push('Assisted Formality Filing')
             }
         }             
@@ -276,6 +265,13 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
                     }
                 })
 
+                vm.pendingAssisted = caseSelected.p3sServicesWithFees.some(function(item){
+                    return item.supportRequestedBy !== null;
+                })
+                
+                vm.assistedAvailable = caseSelected.p3sServicesWithFees.some(function(item){
+                    return assistedOkStatuses.includes(item.serviceStatus)
+                })
 
             }
         )
