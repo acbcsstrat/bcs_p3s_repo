@@ -29,6 +29,7 @@ export default function ValidationController(caseSelected, $scope, $uibModal, $s
     vm.domain = ppdomain;
 
     function stateSelection(selection) {
+
         $scope.selectionBoolean =  selection == 'De-select all' ? false : true;
         for(var i = 0; 0 < allState.length; i++ ) {
             if(allState[i] === undefined) { return; }
@@ -42,13 +43,23 @@ export default function ValidationController(caseSelected, $scope, $uibModal, $s
         vm.patent = caseSelected; 
         $scope.phoneNumber = $scope.ppDetails.partnerPhone;
 
+        var assistedOkStatuses = ['Validation available', 'Preparing quote', 'Quote provided'];
+
+        vm.pendingAssisted = caseSelected.p3sServicesWithFees.some(function(item){
+            return item.supportRequestedBy !== null;
+        })
+        
+        vm.assistedAvailable = caseSelected.p3sServicesWithFees.some(function(item){
+            return assistedOkStatuses.includes(item.serviceStatus)
+        })        
+
         var serviceStatusL = caseSelected.p3sServicesWithFees[0].serviceStatus.toLowerCase();
         if(caseSelected.p3sServicesWithFees[0].validationFeeUI !== null) {
             var array = [];
             allState = array.concat(caseSelected.p3sServicesWithFees[0].validationFeeUI.designatedStates, caseSelected.p3sServicesWithFees[0].validationFeeUI.extensionStates, caseSelected.p3sServicesWithFees[0].validationFeeUI.validationStates)
         }
         vm.activeTab = 0;
-
+        stateSelection('De-select all');
         if(serviceStatusL == 'validation available') { //VALIDATION TEST DATA - REMOVE NotUsed
             vm.validationTemplate = vm.templates[0].url;        
         }
@@ -96,10 +107,10 @@ export default function ValidationController(caseSelected, $scope, $uibModal, $s
             vm.validationTemplate = vm.templates[7].url;  
         }
 
-        if(caseSelected.p3sServicesWithFees[0].validationFeeUI !== null) {
-            var array = [];
-            allState = array.concat(caseSelected.p3sServicesWithFees[0].validationFeeUI.designatedStates, caseSelected.p3sServicesWithFees[0].validationFeeUI.extensionStates, caseSelected.p3sServicesWithFees[0].validationFeeUI.validationStates)
-        }
+        // if(caseSelected.p3sServicesWithFees[0].validationFeeUI !== null) {
+        //     var array = [];
+        //     allState = array.concat(caseSelected.p3sServicesWithFees[0].validationFeeUI.designatedStates, caseSelected.p3sServicesWithFees[0].validationFeeUI.extensionStates, caseSelected.p3sServicesWithFees[0].validationFeeUI.validationStates)
+        // }
 
         if(caseSelected.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'validation available') {
             ValidationService.fetchDesignatedStates(caseSelected.patentID)

@@ -31,7 +31,7 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
 
     var requestObj = {};
 
-    var assistedOkStatuses = ['Epct available', 'Epct saved', 'Epct being generated', 'Grant available', 'Grant saved', 'validationAvailable', 'quotePending',  'quoteProvided'];
+    var assistedOkStatuses = ['Epct available', 'Epct saved', 'Epct being generated', 'Grant available', 'Grant saved', 'Validation available', 'Preparing quote', 'Quote provided'];
 
     function findCommonElements3(arr1, arr2) {
         return arr1.some(item => arr2.includes(item))
