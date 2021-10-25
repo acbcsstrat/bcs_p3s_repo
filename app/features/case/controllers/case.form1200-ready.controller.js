@@ -35,6 +35,16 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
     .then(
         function(response){
 
+            var assistedOkStatuses = ['Epct available', 'Epct saved', 'Epct being generated'];
+
+            vm.pendingAssisted = caseSelected.p3sServicesWithFees.some(function(item){
+                return item.supportRequestedBy !== null;
+            });
+            
+            vm.assistedAvailable = caseSelected.p3sServicesWithFees.some(function(item){
+                return assistedOkStatuses.includes(item.serviceStatus)
+            });
+
             $scope.phoneNumber = $scope.ppDetails.partnerPhone;
             var service = $scope.$parent.availableServices;
 

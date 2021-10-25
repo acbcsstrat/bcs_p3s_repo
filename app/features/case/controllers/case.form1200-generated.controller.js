@@ -12,6 +12,16 @@ export default function Form1200GeneratedController($scope, $state, Form1200Serv
         $scope.confirmDeleteApplication = confirmDeleteApplication;
         $scope.deleteApplicationReq = false;
 
+        var assistedOkStatuses = ['Epct available', 'Epct saved', 'Epct being generated'];
+
+        vm.pendingAssisted = $scope.patent.p3sServicesWithFees.some(function(item){
+            return item.supportRequestedBy !== null;
+        })
+        
+        vm.assistedAvailable = $scope.patent.p3sServicesWithFees.some(function(item){
+            return assistedOkStatuses.includes(item.serviceStatus)
+        })
+
     }
 
     init()
