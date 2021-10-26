@@ -21,9 +21,9 @@ export default angular.module('ngCart.directives', [fulfilment])
             data:'='
         },
         transclude: true,
-        templateUrl: function(element, attrs) {
+        template: function(element, attrs) {
             if ( typeof attrs.templateUrl == 'undefined' ) {
-                return '../app/global/vendors/ngCart/html/addtocart.htm';
+                return require('html-loader!./html/addtocart.htm');
             } else {
                 return attrs.templateUrl;
             }
