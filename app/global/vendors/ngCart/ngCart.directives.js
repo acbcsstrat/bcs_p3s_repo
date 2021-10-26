@@ -58,9 +58,9 @@ export default angular.module('ngCart.directives', [fulfilment])
             ngModel: '='
         },
         controller : 'CartController',
-        templateUrl: function(element, attrs) {
+        template: function(element, attrs) {
             if ( typeof attrs.templateUrl == 'undefined' ) {
-                return '../app/global/vendors/ngCart/html/cart.htm';
+                return require('html-loader!./html/cart.htm');
             } else {
                 return attrs.templateUrl;
             }
@@ -77,9 +77,9 @@ export default angular.module('ngCart.directives', [fulfilment])
         controller : 'CartController',
         scope: {},
         transclude: true,
-        templateUrl: function(element, attrs) {
+        template: function(element, attrs) {
             if ( typeof attrs.templateUrl == 'undefined' ) {
-                return '../app/global/vendors/ngCart/html/summary.htm';
+                return require('html-loader!./html/summary.htm');
             } else {
                 return attrs.templateUrl;
             }
@@ -183,9 +183,9 @@ export default angular.module('ngCart.directives', [fulfilment])
             }
         },
         transclude: true,
-        templateUrl: function(element, attrs) {
+        template: function(element, attrs) {
             if ( typeof attrs.templateUrl == 'undefined' ) {
-                return '../app/global/vendors/ngCart/html/checkout.htm';
+                return require('html-loader!./html/checkout.htm');
             } else {
                 return attrs.templateUrl;
             }
