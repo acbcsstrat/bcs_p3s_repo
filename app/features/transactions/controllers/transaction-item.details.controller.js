@@ -15,7 +15,13 @@ export default function TransactionDetailsController($scope, $state, $timeout, $
 	        return item.newType == 'Validation' ? true : false;
 	    })
 	    vm.transactionItem.serviceUIs.map(function(item, index){
-			item.transItemStatus = transItemStatus(isValidation, vm.transactionItem.latestTransStatus, vm.transactionItem.hasFailed);
+	    	var status;
+	    	for(var name in item) {
+	    		if(name.indexOf('Status') > -1) {
+	    			status = item[name];
+	    		}
+	    	}
+			item.transItemStatus = transItemStatus(isValidation, status, vm.transactionItem.hasFailed);
 	    })
 	})
 	
@@ -25,7 +31,7 @@ export default function TransactionDetailsController($scope, $state, $timeout, $
     	if(failed) {
     		return 'Failed'
     	} else {
-	    	
+
 	    	var index;
 	    	if(val === true) {
 	    		index = transStatusValidationArray.indexOf(status);
@@ -35,10 +41,14 @@ export default function TransactionDetailsController($scope, $state, $timeout, $
 		    		return status;
 		    	}    		
 	    	} else {
+	    		if(status === 'Renewal in place') {
+	    			return 'Completed'
+	    		}	    		
 	    		index = transStatusArray.indexOf(status);
 		    	if(index < 5) {
 		    		return 'Payment in progress'
 		    	} else {
+
 		    		return status;
 		    	}        		
 	    	}
