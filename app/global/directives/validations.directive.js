@@ -75,7 +75,7 @@ function selectNgValidationFiles() { //if files to be uploaded vary in future, a
                 ngModel.$setViewValue(elem[0].files[0]); //This method should be called when a control wants to change the view value; typically, this is done from within a DOM event handler. For example, the input directive calls it when the value of the input changes and select calls it when an option is selected. When $setViewValue is called, the new value will be staged for committing through the $parsers and $validators pipelines
             };
             function validFile(bool) { //sets the input field as either valid or invalid with a boolean value 
-                el.$setValidity('validformat', bool); //Changes the validity state, and notify the form.
+                ngModel.$setValidity('validformat', bool); //Changes the validity state, and notify the form.
             }
             ngModel.$parsers.push(function(value) { //Array of functions to execute, as a pipeline, whenever the control updates the ngModelController with a new $viewValue from the DOM, usually via user input.
                 var ext = value.name.substr(value.name.lastIndexOf('.')+1);

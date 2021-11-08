@@ -191,6 +191,8 @@ export default function ValidationController(caseSelected, $scope, $uibModal, $s
 
     function submitPoaDocuments(data) {
 
+        vm.formDataSubmitted = true;
+
         var formData = {};
 
         var designatedMap = data.designatedStates.map(removeCost);

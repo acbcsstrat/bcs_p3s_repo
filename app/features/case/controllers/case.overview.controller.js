@@ -17,6 +17,7 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
     vm.pendingAssisted = null;
     vm.assistedAvailable = null;
     $scope.notInProgress = true;
+    $scope.noReminders = false;
     $scope.caseoverview_tab = 'details';
     $scope.showOptions = false;
     $scope.activeLeft = 0;
@@ -178,8 +179,8 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
     }
 
     function processView(tab, index, chart) {
-        if((tab == 'reminders' && $scope.validationNotification) || (tab == 'costchart' && $scope.validationNotification) || (tab == 'fxchart' && $scope.validationNotification)) { return; }
-        if(!$scope.notInProgress || tab == 'reminders' || tab == 'details') {
+
+        if(!$scope.notInProgress || (tab == 'reminders' &&  !$scope.noReminders)  || tab == 'details') {
             vm.setTab(tab)
             $scope.activeLeft = index;
             if(chart !== undefined) {
