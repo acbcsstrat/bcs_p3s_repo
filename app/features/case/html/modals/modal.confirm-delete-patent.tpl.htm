@@ -7,6 +7,6 @@
 	<p class="font-body w-100 text-center m-b-sm m-t-xs">It looks like you're trying to remove this patent from the system. If you meant to do this then please carry on, otherwise select 'Cancel' to stop the deletion.</p>
     <div class="d-flex">
     	<button class="btn btn--lg btn--red pill-radius m-r-md" data-ng-click="$ctrl.cancelDeletion()">Cancel</button>
-    	<button class="btn btn--lg btn--green pill-radius" data-ng-click="$ctrl.deletePatent()">Remove</button>
+    	<button class="btn btn--lg btn--green pill-radius" data-ng-click="$ctrl.deletePatent()" data-ng-disabled="$ctrl.deleteInprogress">Remove</button>
     </div>
 </div>

@@ -309,8 +309,9 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
                 this.dismissModal = function() {
                     $uibModalInstance.close();
                 };
-                
+
                 this.deletePatent = function() {
+                    this.deleteInprogress = true;
                     deletePatent(patent);
                     $timeout(function() {
                         $uibModalInstance.close();
