@@ -80,7 +80,10 @@ export default function TransactionsController(TransactionService, $scope, $cook
             }            
 
             function rowSelect(event, transaction){
-                $state.go('transactions.modal.transaction-item', {transId: transaction.p3s_TransRef})
+                if(event.target.nodeName !== 'SELECT') {
+                    $state.go('transactions.modal.transaction-item', {transId: transaction.p3s_TransRef})
+                }
+                
             };          
 
             function selectedChip(prop, value, cat) {
