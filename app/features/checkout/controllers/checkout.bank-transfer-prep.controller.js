@@ -7,6 +7,7 @@ export default function BankTransferPrepController(BankTransferCommitService, $s
 	vm.pageTitle = 'Confirm Order';
 	vm.orderObj = $stateParams.orderObj;
 	vm.details = $stateParams.details
+	vm.preparingTransaction = false;
 	if(vm.orderObj == '') { //if page is refreshed when on bank prepration page
 		$state.go('portfolio', {reload: true}); //direct user to patents
 	} else {
@@ -16,6 +17,8 @@ export default function BankTransferPrepController(BankTransferCommitService, $s
 
 		vm.openCancelTransModal = openCancelTransModal;
 		vm.commitTransfer = commitTransfer;	
+
+
 
 		function openCancelTransModal() {
 
@@ -41,6 +44,8 @@ export default function BankTransferPrepController(BankTransferCommitService, $s
 		};
 
 		function commitTransfer() {
+
+			vm.preparingTransaction = true;
 
 			vm.orderObj.billingDetails = $stateParams.details.billingDetails;
 			BankTransferCommitService.commitTransfer(vm.orderObj) //SERVICE HANDLES STATE.GO

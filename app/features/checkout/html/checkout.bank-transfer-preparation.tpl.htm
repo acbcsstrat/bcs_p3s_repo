@@ -148,10 +148,23 @@
             			<div class="row m-t-md">
         					<div class="col-xl-12 d-flex justify-content-end">
                                 <button class="btn btn--lg btn--red pill-radius m-r-sm" data-ng-click="$ctrl.openCancelTransModal()">Cancel transaction</button>
-                                 <button class="btn btn--lg btn--green pill-radius" data-ng-click="$ctrl.commitTransfer(); ngCart.empty()" data-ng-disabled="$ctrl.commitTransferBtn">Place this order</button>
+                                 <button class="btn btn--lg btn--green pill-radius" data-ng-click="$ctrl.commitTransfer(); ngCart.empty()" data-ng-disabled="$ctrl.preparingTransactionn">Place this order</button>
         					</div>						
             			</div>
                     </div>
     			</div>		
             </div>
     	</div>
+    </div>
+
+<div class="caseoverview-load" data-ng-show="$ctrl.preparingTransaction">
+    <div class="caseoverview-load-backdrop">
+        
+    </div>
+    <div class="caseoverview-loader d-flex justify-content-center align-items-center">   
+        <div>
+            <i class="fas fa-cog fa-spin fa-2x m-b-xs txt-white"></i>
+            <p class="txt-white font-h4 font-weight-bold">We are just processing your transaction</p>
+        </div>
+    </div>
+</div>    
