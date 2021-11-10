@@ -32,6 +32,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	$scope.specificCase = {};
 	// vm.specificSelectValue = '';
 	var caseOverViewSupport = false;
+	$scope.fileUploading = false;
 
 	function init() {
 		$scope.phoneNumber = $scope.ppDetails.partnerPhone;
@@ -317,6 +318,8 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 
     $scope.getFileDetails = function (e, caseSpecific) {
 
+    	$scope.fileUploading = true;
+
     	var timeout;
         var validFormats = ['pdf', 'PDF', 'doc', 'DOC', 'docx', 'DOCX', 'jpg', 'JPG', 'jpeg', 'JPEG','png', 'PNG', 'gif', 'GIF', 'pptx', 'PPTX', 'csv', 'CSV', 'xlsx', 'XLSX', 'zip', 'ZIP'];
         var blobToBase64 = (blob) => {
@@ -326,6 +329,8 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 		    	reader.onloadend = function () {
 			      	resolve(reader.result);
 			    };
+		  	}).then(function(){
+		  		$scope.fileUploading = false;
 		  	});
 		};
 
