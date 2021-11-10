@@ -38,7 +38,7 @@
              
             </div>
             <div class="col-md-6 col-xl-6 text-right">
-                <button type="submit" class="btn btn--green btn--lg pill-radius" data-ng-disabled="caseDetailsForm.$invalid" data-ng-click="$ctrl.add(caseFormData, patent)">
+                <button type="submit" class="btn btn--green btn--lg pill-radius" data-ng-disabled="caseDetailsForm.$invalid || fileUploading" data-ng-click="$ctrl.add(caseFormData, patent)">
                     Add
                 </button>
             </div>        
