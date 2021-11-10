@@ -444,8 +444,8 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
                 	}
     		
                 	vm.patents.find(function(item){ //disable the row
-					    if(selectedPatent.patentID === item.patentID) {
-					        item.selectedForEnquiry = true;
+					    if(selectedPatent.patentID === item.patentID && item.formalityAvailable === selectedPatent.formalityAvailable) {
+				        	item.selectedForEnquiry = true;
 					        return true;
 					    }
 					    return false;

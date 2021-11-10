@@ -173,9 +173,14 @@
                                                         <td class="t-data__td t-data__td--sm sticky-td t-data-ellipsis" data-ng-bind="case.message">
                                                         </td>
                                                         <td class="t-data__td t-data__td--sm sticky-td">
-                                                            <span class="d-block" data-ng-repeat="file in case.uploadedDocs">{{file.name}}</span>
+                                                            <span class="d-block" data-ng-if="case.uploadedDocs.length > 0" data-ng-repeat="file in case.uploadedDocs">
+                                                                {{file.name}}
+                                                            </span>
+                                                            <span class="d-block txt-grey" data-ng-if="case.uploadedDocs.length == 0">[No files uploaded]</span>                                                            
                                                         </td>
-                                                        <td class="t-data__td t-data__td--sm sticky-td" data-ng-bind="case.indicativeCost">
+                                                        <td class="t-data__td t-data__td--sm sticky-td">
+                                                            <span data-ng-if="case.indicativeCost">$ {{case.indicativeCost}}</span>
+                                                            <span class="txt-grey" data-ng-if="!case.indicativeCost">N/A</span>
                                                         </td>
                                                         <td class="t-data__td t-data__td--sm sticky-td">
                                                             <button class="btn btn--bordered btn-underlined txt-phase-green font-weight-bold" data-ng-click="$ctrl.formalitySelect(case, 'edit')" data-ng-disabled="patent.selectedForEnquiry">Edit</button>
@@ -207,7 +212,7 @@
                             <div class="row m-t-sm" data-ng-if="allEnquiryCases.length > 0">
                                 
                                 <div class="col-md-12 col-xl-12 text-right">
-                                    <button type="submit" class="btn btn--green btn--lg pill-radius" data-ng-click="$ctrl.submitForm(caseFormData, true)" data-ng-disabled="specificSupportForm.$invalid">
+                                    <button type="submit" class="btn btn--green btn--lg pill-radius" data-ng-click="$ctrl.submitForm(caseFormData, true)" data-ng-disabled="specificSupportForm.$invalid || $ctrl.submittingRequest">
                                         <span data-ng-show="$ctrl.submittingRequest">                                
                                             <i class="fa fa-spinner fa-spin fa-lg m-r-xs" ></i>
                                         </span>
