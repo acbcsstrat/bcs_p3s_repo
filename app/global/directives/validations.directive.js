@@ -1,3 +1,5 @@
+supportFileUpload.$inject = ['$parse'];
+
 function supportFileUpload($parse) {
 
         return {
@@ -404,6 +406,6 @@ export default angular.module('directives.validation-rules', [])
     .directive('validateCompanyName', validateCompanyName)
     .directive('uiSelectRequired', uiSelectRequired)
     .directive('validateTextField', validateTextField)
-    .directive('supportFileUpload', supportFileUpload)
     .directive('stopPropagation', stopPropagation)
+    .directive('supportFileUpload', supportFileUpload)
     .name;
