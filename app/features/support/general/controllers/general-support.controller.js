@@ -503,7 +503,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 
 
 		if(caseSpecific) {
-			formData.append('patentEnquiries', JSON.stringify($scope.allEnquiryCases));
+			formData.append('patentEnquiries', JSON.stringify($scope.allEnquiryCases));		
 
 			SupportService.requestSpecificSupport(formData, config)
 			.then(
