@@ -324,14 +324,14 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
         var validFormats = ['pdf', 'PDF', 'doc', 'DOC', 'docx', 'DOCX', 'jpg', 'JPG', 'jpeg', 'JPEG','png', 'PNG', 'gif', 'GIF', 'pptx', 'PPTX', 'csv', 'CSV', 'xlsx', 'XLSX', 'zip', 'ZIP'];
         var blobToBase64 = (blob) => {
 		  	return new Promise((resolve) => {
+		  		
 		    	const reader = new FileReader();
 		    	reader.readAsDataURL(blob);
 		    	reader.onloadend = function () {
+		    		$scope.fileUploading = false;
 			      	resolve(reader.result);
 			    };
-		  	}).then(function(){
-		  		$scope.fileUploading = false;
-		  	});
+		  	})
 		};
 
             // STORE THE FILE OBJECT IN AN ARRAY.
@@ -344,7 +344,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 		            scope: $scope,
 		            controllerAs:'$ctrl',
 		            controller: ['$uibModalInstance', function($uibModalInstance) {
-
+		            	$scope.fileUploading = false;
 		                this.dismissModal = function () {
 		                    $uibModalInstance.close();
 		                };
@@ -369,9 +369,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 						  	const b64 = await blobToBase64(e.files[i]);
 						  	const jsonString = JSON.stringify(b64);		
 						  	newObject.fileData = jsonString;
-
 						  	$scope.caseFormData.uploadedDocs.push(newObject); //to be pushed for individualCase ADD
-
 				   			$scope.$applyAsync(); //NEEDED				  	
 
 			   			}
@@ -505,7 +503,8 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 
 
 		if(caseSpecific) {
-			formData.append('patentEnquiries', JSON.stringify($scope.allEnquiryCases));			
+			formData.append('patentEnquiries', JSON.stringify($scope.allEnquiryCases));
+
 			SupportService.requestSpecificSupport(formData, config)
 			.then(
 				function(response){

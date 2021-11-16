@@ -11,15 +11,22 @@
     <form name="caseDetailsForm" novalidate>    
         <textarea name="message" id="message" class="form-control br-1 m-b-sm" rows="10" data-ng-model="caseFormData.message" maxlength="5000" placeholder="Message.." validate-text-field data-ng-required="!$ctrl.assistedFiling"></textarea>
         <div class="form-group row">
-            <div class="col-md-8">
+            <div class="col-md-12 col-xl-12">
                 <p class="font-h4 font-weight-bold m-b-xs">Supporting documents</p>
                 <p class="font-body">If you have any documents that will help our team with your enquiry, please upload them here.</p>
+                <div data-ng-show="fileUploading" class="m-t-xs d-flex align-items-center">
+                    
+                        <i class="fa fa-spinner fa-spin fa-lg m-r-xs" ></i>
+                        <span class="font-body font-weight-bold txt-phase-green">                               
+                        Uploading file
+                    </span>
+                </div>                      
                 <div  class="m-t-xs" data-ng-if="caseFormData.uploadedDocs.length > 0">                            
                     <p class="font-body m-b-xs">Files uploaded:</p>
-                    <div data-ng-repeat="file in caseFormData.uploadedDocs" class="btn btn--lg btn--plain br-1 btn-file-upload m-r-sm" data-ng-click="removeSpecificFile(file.name)">
+                    <div data-ng-repeat="file in caseFormData.uploadedDocs" class="btn btn--lg btn--plain br-1 btn-file-upload m-r-sm m-b-xs" data-ng-click="removeSpecificFile(file.name)">
                         <span class="m-r-sm" title="{{file.name}}">{{file.name}}</span>
                         <span ><i class="fas fa-times fa-lg action-icon btn-close"></i></span>
-                    </div>
+                    </div>              
                 </div>
             </div>
         </div> 
