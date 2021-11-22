@@ -120,7 +120,7 @@ function validateNumbers(){
 
 function validateTextField() {
 
-    var regExp = /[[\]<>"%;&+*/\\]/g;
+    var regExp = /[[\]<>"%;&+*/\\]/;
 
     return {
 

@@ -10,6 +10,9 @@
     </p>
     <form name="caseDetailsForm" novalidate>    
         <textarea name="message" id="message" class="form-control br-1 m-b-sm" rows="10" data-ng-model="caseFormData.message" maxlength="5000" placeholder="Message.." validate-text-field data-ng-required="!$ctrl.assistedFiling"></textarea>
+        <p class="form-help font-body m-t-xs">{{!caseFormData.message.length ? 0 : caseFormData.message.length}} / 5000 Characters</p>                        
+        <p class="font-body txt-phase-red m-t-xs" data-ng-show="caseDetailsForm.message.$error.required && caseDetailsForm.message.$dirty">Please fill out this field</p>
+        <p class="font-body txt-phase-red m-t-xs" data-ng-show="caseDetailsForm.message.$error.validTextField && caseDetailsForm.message.$dirty">Special characters: &lsqb;&rsqb;&lt;&gt;&quot;&percnt;&semi;&amp;&plus;&bsol;&sol;&ast; are not permitted.</p>          
         <div class="form-group row">
             <div class="col-md-12 col-xl-12">
                 <p class="font-h4 font-weight-bold m-b-xs">Supporting documents</p>
