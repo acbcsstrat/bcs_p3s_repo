@@ -146,7 +146,7 @@ function validateTextField() {
 
 function validateCompanyName() {
 
-    var regExp = /^[a-zA-z0-9\'\+\.\(\), -]*$/;
+    var regExp = /^[A-Za-z0-9\'\+\.\(\), -]*$/;
 
     return {
 
@@ -170,7 +170,7 @@ function validateCompanyName() {
 
 function validateName(){
 
-    var regExp = /^[a-zA-z0-9\s\w'-]*$/;
+    var regExp = /^[A-Za-z0-9\s\w'-]*$/;
 
     return {
 
@@ -238,7 +238,7 @@ function validateEmail(){
 
 function validateAddress(){
 
-    var regExp = /^[a-zA-z0-9\s\-\(\).,]*$/;
+    var regExp = /^[A-Za-z0-9\s\-\(\).,]*$/;
 
     return {
         require: 'ngModel',
@@ -263,7 +263,7 @@ function validateAddress(){
 
 function validateZip(){
 
-    var regExp = /^[0-9\-]*$/;
+    var regExp = /^[0-9\-\s]*$/;
 
     return {
         require: 'ngModel',

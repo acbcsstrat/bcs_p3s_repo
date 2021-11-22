@@ -159,7 +159,7 @@
                             <div class="col-md-12 col-lg-12 col-xl-12">
                                 <input type="text" name="businessName" class="form-control pill-radius font-body" placeholder="Business Name" data-ng-model="$ctrl.formData.businessName" data-ng-class="{'input-error': $ctrl.formValidation && registrationForm.businessName.$error.required}"  data-validate-company-name required>
                                 <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.businessName.$error.required && registrationForm.businessName.$dirty">Please fill out this field</p>
-                                <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.businessName.$error.validCompanyName && registrationForm.businessName.$dirty">Only letters, numbers, -, (), ., + and spaces are valid charcters in this field.</p>
+                                <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.businessName.$error.validCompanyName && registrationForm.businessName.$dirty">Only letters, numbers, -, (), ., ',+ and spaces are valid charcters in this field.</p>
                             </div>
                         </div>
                         <div class="form-group row">
