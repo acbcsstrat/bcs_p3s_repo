@@ -1,0 +1,191 @@
+@import '../helpers/_variables.scss';
+@import '../helpers/_mixins.scss';
+
+.t-data {
+    font-family: $font-body;
+    font-size: $font-normal;
+    width: 100%;
+    .t-data__a {
+        &:hover {
+            color: $black;
+            text-decoration: none; 
+        }
+    }
+
+    .t-data__row {
+        border-top: 1px solid $grey-border;
+        border-bottom: 1px solid $grey-border
+    }
+
+    .t-data__row--select {
+        &:hover {
+            cursor: pointer;
+        }
+        &:hover:not(.t-data__head), &.active:not(.t-data__head) {
+            background: #f5f5f5;
+            .sticky-td {
+                background: #f5f5f5;
+            }    
+        }  
+    }
+
+    .t-data__td {
+        vertical-align: middle;
+        text-align: left;
+        @include padding-mixin(1rem 3rem);
+        &.t-data__td--xs {
+            min-width: 100px;
+        }        
+        &.t-data__td--sm {
+            min-width: 200px;
+        }
+        &.t-data__td--md {
+            min-width: 300px;
+        }
+        &.t-data__td--lg {
+            min-width: 400px;
+        }
+        &.t-data-ellipsis {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        &.t-data__td--no-side-padding {
+            padding-left: 0!important;
+            padding-right: 0!important;
+        }
+    }
+    
+
+    .t-data__th {
+        vertical-align: middle;
+        text-align: left;
+        @include padding-mixin(1.5rem 3rem);
+        // min-width: 300px;
+        &.t-data__th--xs {
+            min-width: 100px;
+        }        
+        &.t-data__th--sm {
+            min-width: 200px;
+        }
+        &.t-data__th--md {
+            min-width: 300px;
+        }
+        &.t-data__th--lg {
+            min-width: 400px;
+        }       
+    }
+
+    &.table-fixed {
+        table-layout: fixed;
+    }
+
+
+    
+
+}
+
+
+.sticky-table {
+    .sticky-thead, .sticky-tbody {
+        .sticky-th, .sticky-td {
+            position: sticky;
+            left: 0px;
+            z-index: 8;
+            background: white;
+            border-right: 1px solid $grey-border;
+        }
+    }
+    .sticky-thead {
+        &>th {
+            background-color:white;
+        }
+    }    
+}
+
+.t-data__w8 { width: 8%; }
+.t-data__w9 { width: 9%; }
+.t-data__w10 { width: 10%; }
+.t-data__w13 { width: 13%; }
+.t-data__w14 { width: 14%; }
+.t-data__w15 { width: 15%; }
+.t-data__w16 { width: 16%; }
+.t-data__w18 { width: 18%; }
+.t-data__w20 { width: 20%; }
+.t-data__w25 { width: 25%; }
+.t-data__w30 { width: 30%; }
+.t-data__w40 { width: 40%; }
+.t-data__w50 { width: 50%; }
+.t-data__w60 { width: 60%; }
+.t-data__w70 { width: 70%; }
+
+
+
+.container__scrollable-area {
+    border-radius: 10px;
+    border: 1px solid $grey-border;    
+    -webkit-box-shadow: 0px 7px 5px 0px rgba(0,0,0,0.1);
+    -moz-box-shadow: 0px 7px 5px 0px rgba(0,0,0,0.1);
+    box-shadow: 0px 7px 5px 0px rgba(0,0,0,0.1);    
+    background: $white;
+}
+
+.scrollable-area { /*modules*/ /*components*/ /*_tables.scss*  ADD CLASS INSTAD OF SELECTING WITH ID*/ 
+    overflow-x: scroll;
+    // min-height: 386px;
+    &.scrollable-area--250 {
+        height: 250px;
+    }
+
+    &.scrollable-area--full-height {
+        height: calc(100vh - 210px);
+        max-height: calc(100vh - 210px);
+    }
+    &.scrollable-area--mid-height {
+        height: calc(100vh - 50.5rem);
+        max-height: calc(100vh - 50.5rem);
+    }
+    &.scrollable-area--set-height-md {
+        height: 50rem;
+    }    
+    &::-webkit-scrollbar-thumb {
+        background: $grey; 
+        border-radius: 10px;
+        height: 30px;
+    }      
+
+    &::-webkit-scrollbar {
+        width: 15px;
+    }    
+    &.dashboard-table {
+        height: 280px;
+    }    
+    &.scrollable-area--no-shadow {
+        -webkit-box-shadow: 0 0 0 0 rgba(0,0,0,0);
+        -moz-box-shadow: 0 0 0 0 rgba(0,0,0,0);
+        box-shadow: 0 0 0 0 rgba(0,0,0,0);
+    }
+
+    thead tr:nth-child(1) th{
+        background: white;
+        position: sticky;
+        top: 0;
+        z-index: 9;
+        &:nth-child(1) {
+            z-index: 10;
+        }
+    }  
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: $grey; 
+        border-radius: 10px;
+        height: 30px;
+    }
+
+}
+
+.th-w-25 {
+    width: 25%;
+}

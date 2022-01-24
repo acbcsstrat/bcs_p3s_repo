@@ -1,0 +1,128 @@
+<!-- <div class="modal-backdrop"></div> -->
+<div class="container-add-patent d-flex" data-ng-class="{'active': foundPatent}">
+    <div class="recently-added-panel" data-ng-show="recently.added.length" data-ng-class="{'active': recently.added.length}">
+        <div class="p-t-4 p-b-4 p-l-3">
+            <div class="row">
+                <div class="col-md-12 border-grey-xs--right">
+                    <p class="font-h4 font-weight-medium m-b-xs">Recently Added</p>
+                    <p data-ng-repeat="item in recently.added" class="m-b-xs">
+                        <a data-ui-sref="portfolio.modal.case({caseId: item.id})" class="inline-link blue">{{item.ep_ApplicationNumber}}</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="add-patent-panel" role="dialog">
+        <div class="p-t-4 p-r-3 p-l-3">
+            <div class="row">
+                <div class="col-md-12 col-lg-7 col-xl-12">
+                    <p class="font-body font-weight-medium m-b-xs">Please enter the application number (including check digit) :</p>
+                    <form class="form" name="searchPatentForm" novalidate>
+                        <div class="form-group m-b-none d-flex align-items-center">
+                            <input type="text" name="searchPatent" id="searchPatent" data-ng-model="searchPatent" class="form-control form-control-lg pill-radius m-r-sm" placeholder="Patent Application No. ..." focus-me="true" data-validate-search data-ng-disabled="loadingPatent || foundPatent">
+                            <button type="submit" data-ng-hide="loadingPatent" data-ng-click="findPatent(searchPatent);" class="btn-reset">
+                                <span class="fa-stack fa-2x cursor-pointer">
+
+                                    <i class="fas fa-circle fa-stack-2x txt-phase-green"></i>
+                                    <i class="far fa-search fa-stack-1x fa-inverse"></i>
+                 
+                                </span>
+                            </button>
+                            <span class="fa-stack fa-2x" data-ng-show="loadingPatent">
+                                <i class="fas fa-circle fa-stack-2x txt-phase-green"></i>
+                                <i class="far fa-cog fa-spin fa-stack-1x fa-inverse"></i>
+                            </span>                    
+                        </div>
+                    </form>
+                     
+                </div>
+                <div class="col-md-12 col-lg-12 col-xl-12 m-t-sm" data-ng-show="error">
+                    <p class="font-body font-weight-medium txt-phase-red" data-ng-bind="searchError"></p>
+                </div>             
+            </div>
+
+        </div>
+        <div class="p-r-3 p-b-3 p-l-3">    
+            <div class="row found-patent-panel" data-ng-show="foundPatent">
+                    <div class="col-md-12">
+                        <div class="found-patent-panel__content">
+                      
+                        <div class="border-grey-xs--btm m-t-sm m-b-sm"></div> 
+                            <form name="addPatentForm">
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-12 col-xl-12 m-b-sm">
+
+                                        <div class="form-group row">
+                                            <label class="col-form-label font-body col-xl-4 font-weight-medium">Client Reference:</label>
+                                            <div class="col-xl-8">                            
+                                                <input type="text" name="patentClientRef" class="form-control" data-ng-maxlength="15" data-ng-model="foundPatent.clientRef" ref-validate>
+                                            </div>
+                                            <div class="col-md-12 m-t-xs">                                            
+                                                <p class="txt-phase-red" data-ng-show="addPatentForm.patentClientRef.$error.validRef && addPatentForm.patentClientRef.$dirty">Special characters &amp;, &lt; and &gt; are not permitted to be included in the Client Reference.</p>
+                                                <p class="txt-phase-red" data-ng-show="addPatentForm.patentClientRef.$error.maxlength && addPatentForm.patentClientRef.$dirty">The field exceeds the maximum value of 15 characters</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label font-body col-xl-4 font-weight-medium">Client Description:</label>
+                                            <div class="col-xl-8">                            
+                                                <input type="text" name="patentShortTitle" class="form-control" data-ng-maxlength="25" data-ng-model="foundPatent.shortTitle">
+                                            </div>
+                                            <div class="col-md-12 m-t-xs">   
+                                                <p class="txt-phase-red" data-ng-show="addPatentForm.patentShortTitle.$error.maxlength && addPatentForm.patentShortTitle.$dirty" required>The field exceeds the maximum value of 25 characters</p>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group row">
+                                            <label class="col-form-label font-body col-xl-4 font-weight-medium">Primary Applicant Name:</label>
+                                            <div class="col-xl-8">                            
+                                                <input type="text" name="primaryApplicantName" class="form-control border-none" data-ng-model="foundPatent.primaryApplicantName" required readonly>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-form-label font-body col-xl-4 font-weight-medium">Application No:</label>
+                                            <div class="col-xl-8">                            
+                                                <input type="text" name="filingDateUI" class="form-control border-none" data-ng-model="foundPatent.patentApplicationNumber" required readonly>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-form-label font-body col-xl-4 font-weight-medium">Publication No:</label>
+                                            <div class="col-xl-8">                            
+                                                <input type="text" name="title" class="form-control border-none" data-ng-model="foundPatent.patentPublicationNumber" required readonly>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-form-label font-body col-xl-4 font-weight-medium">Title:</label>
+                                            <div class="col-xl-8">                            
+                                                <input type="text" name="title" class="form-control border-none" data-ng-model="foundPatent.title" required readonly>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-form-label font-body col-xl-4 font-weight-medium">Filing Date:</label>
+                                            <div class="col-xl-8">                            
+                                                <input type="text" name="title" class="form-control border-none" data-ng-model="foundPatent.filingDateUI" required readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="border-grey-xs--btm m-t-sm m-b-sm"></div> 
+                                <div class="row m-t-sm">
+                                    <div class="col-md-12 col-lg-12 col-xl-12">
+                                        <div class="d-flex justify-content-end align-items-center">
+                                            <button class="btn btn-underlined font-weight-medium m-r-sm txt-phase-red" type="button" data-ng-click="foundPatent = null; searchPatent = null">Cancel</button>
+                                            <button class="btn btn--lg btn--green pill-radius" data-ng-click="openConfirmModal(foundPatent)" data-ng-disabled="!searchPatentForm.$valid || $ctrl.addingPatent || addPatentForm.patentClientRef.$error.validRef || addPatentForm.patentClientRef.$error.maxlength || addPatentForm.patentShortTitle.$error.maxlength" type="submit">Add patent</button>
+                                        </div>      
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                     
+                </div>
+            </div>
+        </div>
+</div>

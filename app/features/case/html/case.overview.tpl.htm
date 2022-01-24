@@ -1,0 +1,236 @@
+<div data-ng-show="$ctrl.portfolioLoaded" class="animate-show modal-box">
+	<div class="modal-overview d-flex flex-column bg-white">
+		<div class="modal-overview__options-panel cursor-pointer d-flex align-items-center">
+			<div class="options-panel__item">
+				<button class="btn btn-no-bg" data-ng-click="$ctrl.confirmDeletePatent($ctrl.patent)"  data-ng-disabled="!$ctrl.patent.patentDeletable"><i class="fas fa-trash-alt fa-lg action-icon"></i>
+				</button>
+				<md-tooltip md-delay="500" md-direction="bottom" md-z-index="99999" data-ng-show="!$ctrl.patent.patentDeletable" class="font-h4">
+					<div class="tooltip-inner text-left">
+						<p class="font-h4 m-b-xs">Unable to delete case</p>
+						<p class="font-body" data-ng-bind="$ctrl.patent.patentNotDeletableReason">
+						</p>
+					</div>
+				</md-tooltip>
+			</div>
+			<div  class="options-panel__item">
+				<button class="btn btn-no-bg" data-ng-click="$ctrl.closeCaseoverview()"><i class="fas fa-times fa-2x action-icon"></i></button>
+			</div>
+		</div>
+		<div class="d-flex flex-grow-1 brbl-10 brtl-10 h100">
+			<div class="row flex-grow-1">
+				<div class="col-md-12 col-lg-12 col-xl-12 d-flex flex-grow-1 h100">
+					<div class="d-flex flex-grow-1">
+						<div class="width197 brbl-10 brtl-10 bg-light-grey">
+							<ul class="tabs-left nav tabs-left--width197 m-t-lg">
+								<li class="nav-item">
+									<a class="nav-link d-flex flex-column" data-ng-class="{'active': activeLeft === 0 }" data-ng-click="$ctrl.setTab('details'); activeLeft = 0;">
+										<span><i class="fal fa-info-circle font-h3"></i></span>
+										<span>Details</span>
+									</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link d-flex flex-column" 
+									data-ng-disabled="noReminders"
+									data-ng-class="{'disabled': noReminders, 'active': activeLeft === 1 }" 
+									data-ng-click="$ctrl.processView('reminders', 1); activeLeft = 1;">
+										<span><i class="fal fa-exclamation-circle font-h3"></i></span>							
+										<span>Reminders</span>
+									</a>
+								</li>
+								<li class="nav-item" data-ng-show="$ctrl.displayForm1200Tab">
+									<a class="nav-link d-flex flex-column" data-ng-class="{'active': activeLeft === 2 }" data-ng-click="$ctrl.setTab('form1200'); activeLeft = 2;">
+										<span> <i class="fal fa-file-alt font-h3"></i></span>
+										<span>Form 1200</span>
+									</a>
+								</li>
+								<li class="nav-item" data-ng-show="$ctrl.displayRenewalHistoryTab">
+									<a class="nav-link d-flex flex-column" data-ng-class="{'active': activeLeft === 3 }" data-ng-click="$ctrl.setTab('renewalhistory'); activeLeft = 3;">
+										<span><i class="fal fa-usd-circle font-h3"></i></span>
+										<span>Renewal History</span>
+									</a>
+								</li>
+								<li class="nav-item" data-ng-show="$ctrl.displayGrantTab">
+									<a class="nav-link d-flex flex-column" data-ng-class="{'active': activeLeft === 4 }" data-ng-click="$ctrl.setTab('grantandpublishing');  activeLeft = 4;">
+										<span> <i class="fal fa-file-alt font-h3"></i></span>
+										<span>Grant & Publishing</span>
+									</a>
+								</li>
+								<li class="nav-item" data-ng-show="$ctrl.displayValidationTab">
+									<a class="nav-link d-flex flex-column" data-ng-class="{'active': activeLeft === 8 }" data-ng-click="$ctrl.setTab('validation');  activeLeft = 8;">
+										<span> <i class="fal fa-file-alt font-h3"></i></span>
+										<span>Validation</span>
+									</a>
+								</li>
+								<li class="nav-item">
+									<a 
+									class="nav-link d-flex flex-column" 
+									data-ng-disabled="notInProgress" 
+									data-ng-class="{'disabled': notInProgress, 'active': activeLeft ===  5};" 
+									data-ng-click="$ctrl.processView('feebreakdown', 5); activeLeft = 5;" >
+										<span><i class="fal fa-usd-circle font-h3"></i></span>
+										<span>Fee Breakdown</span>
+									</a>
+						            <md-tooltip md-delay="500" md-direction="right" md-z-index="99999" data-ng-show="notInProgress" class="font-h4">
+						              	This tab provides no information due the current status(es) of the European action(s).<br> Please check again once there is any progress with the application.
+						            </md-tooltip>
+								</li>
+								<li class="nav-item">
+									<a 
+									class="nav-link d-flex flex-column" 
+									data-ng-disabled="notInProgress" 
+									data-ng-class="{'disabled': notInProgress, 'active': activeLeft ===  6};" 
+									data-ng-click="$ctrl.processView('fxchart', 6, 'chart'); activeLeft = 6;">
+										<span><i class="fal fa-chart-line font-h3"></i></span>
+										<span>FX Chart</span>
+									</a>
+						            <md-tooltip md-delay="500" md-direction="right" md-z-index="99999" data-ng-show="notInProgress" class="font-h4">
+						              	This tab provides no information due the current status(es) of the European action(s).<br> Please check again once there is any progress with the application.
+						            </md-tooltip>
+								</li>
+								<li class="nav-item">
+									<a 
+									class="nav-link d-flex flex-column" 
+									data-ng-disabled="notInProgress" 
+									data-ng-class="{'disabled': notInProgress,'active': activeLeft ===  7}" 
+									data-ng-click="$ctrl.processView('costchart', 7, 'chart'); activeLeft = 7;">
+										<span> <i class="fal fa-chart-bar font-h3"></i> </span>
+										<span>Cost Chart</span>
+									</a>
+						            <md-tooltip md-delay="500" md-direction="right" md-z-index="99999" data-ng-show="notInProgress" class="font-h4">
+						              	This tab provides no information due the current status(es) of the European action(s).<br> Please check again once there is any progress with the application.
+						            </md-tooltip>									
+								</li>								
+							</ul>
+						</div>
+						<div class="d-flex flex-column flex-grow-1 modal-overview__view">
+							<div class=" p-t-4 p-r-3 p-l-3 ">
+								<div class="row">
+									<div class="col-md-6 col-xl-6 d-flex flex-column " data-ng-class="$ctrl.actionsAvailable == true ? 'justify-content-between' : 'justify-content-center'">
+										<p class="font-h3 font-weight-bold">Application Number: <span class="font-weight-normal">{{$ctrl.patent.ep_ApplicationNumber}}</span></p>
+										<div data-ng-show="$ctrl.actionsAvailable" class="d-flex m-t-sm">
+											<p class="font-weight-bold m-r-xs">Formality Actions Available</p>
+			                                <button class="btn btn-no-bg" data-ng-click="formalityAction = !formalityAction" data-ng-hide="!formalityAction">
+			                                	<i class="fas fa-minus-circle txt-phase-green cursor-pointer fa-lg" ></i>
+			                                </button>
+			                                <button class="btn btn-no-bg" data-ng-click="formalityAction = !formalityAction" data-ng-show="!formalityAction">
+			                                	<i class="fas fa-plus-circle txt-phase-green cursor-pointer fa-lg" ></i>
+			                                </button>
+			                            </div>										
+									</div>
+									<div class="col-md-6 col-xl-6 text-right">
+								    	<md-menu>
+								      		<button class="btn btn--lg btn--bordered grey pill-radius txt-white" data-ng-click="$ctrl.openSupportMenu($mdMenu, $event);">
+								        		<span class="icon-text">Request support</span> 
+								      		</button>
+								      		<md-menu-content width="4">
+												<div class="md-menu-close-container">
+													<button class="btn btn-no-bg" data-ng-click="$mdMenu.close()"><i class="fas fa-times fa-lg"></i></button>
+													
+												</div>
+												<div class="spacer"></div>
+									        	<md-list data-ng-show="$ctrl.multipleFormalities">
+									        		<md-list-item class="border-grey-xs--btm">
+									        			<p>Which formality is your enquiry related to?</p>
+									        		</md-list-item>
+											        <md-list-item>
+											        	<button class="btn btn-md-list" data-ng-click="$ctrl.selectMultiFormality('renewal');" md-prevent-menu-close="md-prevent-menu-close">Renewal</button>
+											        </md-list-item>
+											        <md-list-item>
+											        	<button class="btn btn-md-list" data-ng-click="$ctrl.selectMultiFormality('grant');" md-prevent-menu-close="md-prevent-menu-close">Grant</button>
+											        </md-list-item>								        		
+									        	</md-list>							      			
+									        	<md-list data-ng-show="$ctrl.displaySupportTypes">
+									        		<md-list-item class="border-grey-xs--btm text-center">
+									        			<p>Select a category for your enquiry</p>
+									        		</md-list-item>									        		
+									        		<md-list-item data-ng-repeat="type in $ctrl.supportType" class="font-body">
+									        			<button class="btn btn-md-list" data-ng-click="$ctrl.selectSupportType(type)">{{type}}</button>
+									        			
+									        		</md-list-item>
+									        	</md-list>
+									      	</md-menu-content>	
+								    	</md-menu>						
+									</div>									
+							        <div class="col-md-12">
+							        	<div class="border-grey-xs--btm m-t-sm m-b-sm"></div>
+							        </div>
+						        </div>
+								<div class="row" data-ng-show="$ctrl.actionsAvailable">
+									<div class="col-md-12 col-xl-12">
+			                            <div class="expandcollapse-item" data-ng-init="formalityAction = true">
+			                                <div class="slideDown m-b-sm" data-ng-hide="formalityAction === false">
+												<div data-ng-init="$ctrl.checkAvailableAction($ctrl.patent.p3sServicesWithFees)">
+													
+							                		<div data-ng-repeat="item in $ctrl.patent.p3sServicesWithFees track by $index" class="formality-tile m-r-sm" data-ng-class="{'d-none' : item.saleType == 'Not In Progress'}" >
+							                			
+											               	<p class="font-body text-capitalize" data-ng-if="item.saleType == 'Online' || item.saleType == 'Offline' || item.saleType == 'In Progress'"><span class="font-weight-bold m-r-xs">Formality:</span> {{item.serviceType}}</p>
+
+											               	<p><span class="font-weight-bold m-r-xs">Support:</span> <span data-ng-if="item.supportRequestedBy !== null" class="txt-phase-green">Requested</span><span data-ng-if="item.supportRequestedBy == null">N/A</span></p>
+
+											                
+											                	<span class="font-body font-weight-bold m-r-xs">Action:</span>
+													            <transaction-link trans-id="{{$ctrl.patent.patentID}}" trans-servicetype="{{item.serviceType}}" data-ng-if="item.saleType == 'In Progress' && item.serviceStatus !== 'Preparing quote'" class="directive-btn underlined"></transaction-link>
+					                                            <a data-ng-if="item.saleType == 'Online' && item.serviceStatus === 'Grant available'" class="btn btn--bordered btn-underlined txt-phase-green" data-ng-click="$ctrl.setTab('grantandpublishing');  activeLeft = 4;">Prepare Grant
+					                                            </a>
+					                                            <a data-ng-if="item.saleType == 'Online' && item.serviceStatus === 'Validation available'" class="btn btn--bordered btn-underlined txt-phase-green" data-ng-click="$ctrl.setTab('validation');  activeLeft = 4;">Select validation states
+					                                            </a>                                            
+					                                            <a data-ng-if="item.saleType == 'Online' && (item.serviceStatus === 'Epct available' || item.serviceStatus === 'Epct rejected')" class="btn btn--bordered btn-underlined txt-phase-green" data-ng-click="$ctrl.setTab('form1200'); activeLeft = 2;">Initiate Form 1200</a>
+					                                            <p data-ng-if="item.serviceStatus == 'Epct being generated'" class="btn btn--bordered btn-underlined txt-phase-green">{{item.serviceStatusUI}}</p>
+													            <ngcart-addtocart id="{{item.actionID}}" class="directive-btn underlined cartbtn" name="epct" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Epct saved'"></ngcart-addtocart>
+													            <ngcart-addtocart id="{{item.actionID}}" class="directive-btn underlined cartbtn" name="renewal" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Show price'"></ngcart-addtocart>
+													            <ngcart-addtocart id="{{item.actionID}}" class="directive-btn underlined cartbtn" name="grant" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Grant saved'"></ngcart-addtocart>
+													            <ngcart-addtocart id="{{item.actionID}}" class="directive-btn underlined cartbtn" name="validation" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Quote provided'"></ngcart-addtocart>
+													            <div data-ng-if="item.saleType == 'Offline'" class="d-inline">
+													            	<p class="font-weight-medium font-body m-r-xs d-inline" data-ng-class="item.isUrgentAttention ? 'txt-phase-red' : 'txt-phase-green'" >Call {{phoneNumber}}</p>
+							                                        <div class="d-inline">                            
+							                                            <i class="fas fa-question-circle txt-phase-green cursor-pointer fa-lg">
+							                                            </i>			                                            
+							                                            <md-tooltip md-delay="200" class="mdtooltip-md" md-direction="bottom" md-z-index="99999" data-ng-if="item.isUrgentAttention">
+							                                                <p class="font-body">
+					                    										This formality's deadline is too close for it to be processed online. Call our patent administrator on {{phoneNumber}} who will attempt to process it manually before the deadline hits
+							                                                </p>
+							                                            </md-tooltip>  
+							                                            <md-tooltip md-delay="200" class="mdtooltip-md" md-direction="bottom" md-z-index="99999" data-ng-if="!item.isUrgentAttention && item.saleType == 'Offline'">
+							                                                <p class="font-body">
+							                                                    This formality can only be processed manually offline. To find out more details as to why, please select the appropriate formality tab on the left
+							                                                </p>
+							                                            </md-tooltip>  			                                            
+							                                        </div>									            	
+													            </div>
+											              
+							                			</div>
+							                			
+						                		</div>
+												<div class="border-grey-xs--btm m-t-sm m-b-sm"></div>
+											</div>
+										</div>
+	                                </div>                                
+								</div>
+
+							</div>
+
+							<div class="p-r-3 p-b-3 p-l-3 modal-overview__view__body brbr-10">
+
+										<div ui-view="details" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'details'"></div>
+										<div ui-view="reminders" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'reminders'"></div>
+										<div ui-view="form1200" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'form1200'"></div>
+										<div ui-view="renewalhistory" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'renewalhistory'"></div>
+										<div ui-view="grantandpublishing" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'grantandpublishing'"></div>
+										<div ui-view="validation" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'validation'"></div>
+										<div ui-view="fee-breakdown" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'feebreakdown'"></div>
+										<div ui-view="fxchart" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'fxchart'"></div>
+										<div ui-view="costchart" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'costchart'"></div>
+	
+							</div>			
+						</div>
+					</div>			
+				</div>					
+			</div>
+		</div>
+<!-- 		<div class="row m-t-md">
+			<div class="col-xl-12 text-left">
+				<input type="button" id="delete" class="btn btn--lg btn--red pill-radius" value="Remove patent" data-ng-click="$ctrl.confirmDeletePatent($ctrl.patent.patentID)">
+			</div>
+		</div> -->
+	</div>
+</div>

@@ -53,14 +53,15 @@ module.exports = {
         }, 
         { 
           test: /\.(html|tpl)$/, 
-          loader: 'html-loader' 
+          loader: 'html-loader',
+          options: { esModule: false } 
         },
         {
           test: /\.css$/,
           use: [
             { 
               loader: MiniCssExtractPlugin.loader, 
-              options: { sourceMap: true } 
+              options: { sourceMap: true,         esModule: false } 
             },
             { loader: 'css-loader', options: { url: false, sourceMap: true } },
             { 
@@ -81,7 +82,8 @@ module.exports = {
     },
     plugins: [
       new MiniCssExtractPlugin({
-        sourceMap: true,
+        //fix issue on compile
+   
         filename: '[name].css',
         chunkFilename: '[id].css',
       }),
@@ -97,7 +99,7 @@ module.exports = {
         filename:'index.html'
 
       }),  
-      new webpack.NamedModulesPlugin(),
+      // new webpack.NamedModulesPlugin(),
       // new webpack.HotModuleReplacementPlugin()      commented out for use of contentHash. has to be used if HMR is used
     ]
 }

@@ -1,0 +1,57 @@
+<div class="modal-header d-flex flex-column align-items-stretch">
+    <span class="modal-cross cursor-pointer" data-ng-click="$ctrl.dismissModal()"><i class="txt-grey fa fa-times fa-2x"></i></span>
+    <p class="font-h2 font-weight-bold m-b-sm">Support details</p>
+    <p class="font-h3 m-b-sm"><span class="font-weight-bold">Application No. :</span> {{$ctrl.applicationNo}}</span></p>
+    <p class="font-h3 m-b-sm">
+        <span class="font-weight-bold">Formality type:</span>
+        <span data-ng-if="$ctrl.formalityType == 'epct'">Euro-PCT</span>
+        <span data-ng-if="$ctrl.formalityType == 'postvalidation' || $ctrl.formalityType == 'postgrant'">----</span>
+        <span class="text-capitalize" data-ng-if="$ctrl.formalityType !== 'postvalidation' && $ctrl.formalityType !== 'postgrant' && $ctrl.formalityType !== 'epct'">{{$ctrl.formalityType}}</span>    
+    </p>
+    <form name="caseDetailsForm" novalidate>    
+        <textarea name="message" id="message" class="form-control br-1 m-b-sm" rows="10" data-ng-model="caseFormData.message" maxlength="5000" placeholder="Message.." validate-text-field data-ng-required="!$ctrl.assistedFiling"></textarea>
+        <p class="form-help font-body m-t-xs">{{!caseFormData.message.length ? 0 : caseFormData.message.length}} / 5000 Characters</p>                        
+        <p class="font-body txt-phase-red m-t-xs" data-ng-show="caseDetailsForm.message.$error.required && caseDetailsForm.message.$dirty">Please fill out this field</p>
+        <p class="font-body txt-phase-red m-t-xs" data-ng-show="caseDetailsForm.message.$error.validTextField && caseDetailsForm.message.$dirty">Special characters: &lsqb;&rsqb;&lt;&gt;&quot;&percnt;&semi;&amp;&plus;&bsol;&sol;&ast; are not permitted.</p>          
+        <div class="form-group row">
+            <div class="col-md-12 col-xl-12">
+                <p class="font-h4 font-weight-bold m-b-xs">Supporting documents</p>
+                <p class="font-body">If you have any documents that will help our team with your enquiry, please upload them here.</p>
+                <div data-ng-show="fileUploading" class="m-t-xs d-flex align-items-center">
+                    
+                        <i class="fa fa-spinner fa-spin fa-lg m-r-xs" ></i>
+                        <span class="font-body font-weight-bold txt-phase-green">                               
+                        Uploading file
+                    </span>
+                </div>                      
+                <div  class="m-t-xs" data-ng-if="caseFormData.uploadedDocs.length > 0">                            
+                    <p class="font-body m-b-xs">Files uploaded:</p>
+                    <div data-ng-repeat="file in caseFormData.uploadedDocs" class="btn btn--lg btn--plain br-1 btn-file-upload m-r-sm m-b-xs" data-ng-click="removeSpecificFile(file.name)">
+                        <span class="m-r-sm" title="{{file.name}}">{{file.name}}</span>
+                        <span ><i class="fas fa-times fa-lg action-icon btn-close"></i></span>
+                    </div>              
+                </div>
+            </div>
+        </div> 
+        <div class="form-group row"  data-ng-if="caseDetailsForm.uploadedDocs.$error.validfile">
+            <div class="col-md-12 col-xl-7m-b-sm">
+                <p class="txt-phase-red font-body" data-ng-show="fileStore.maxSizeError">You cannot upload a document with a file size of 0KB.</p>
+                <div ng-messages="caseDetailsForm.uploadedDocs.$error" data-ng-if="caseDetailsForm.uploadedDocs.$error.validfile">
+                    <p class="txt-phase-red m-t-xs" ng-message="validfile">Invalid file format uploaded. Only the following file formats are permitted (not case sensitive): .pdf, .docx, .png, .gif, .jpg, .jpeg, .pptx, .csv, .xlsx, .zip</p> 
+                </div>   
+            </div>              
+        </div>        
+        <div class="row m-t-md">
+            <div class="col-md-6 col-xl-6 text-left"><!--fileStore.file-->
+                <input type="file" name="uploadedDocs" id="uploadedDocs" class="d-none" data-ng-model="caseFormData.files" support-file-upload onchange="angular.element(this).scope().getFileDetails(this, true)" accept=".pdf, .PDF, .docx, .DOCX, .png, .PNG, .gif, .GIF, ,.jpg, .JPG, .jpeg, .JPEG, .pptx, .PPTX, .csv, .CSV, .xlsx, .XLSX, .zip, .ZIP" multiple>
+                <label for="uploadedDocs" class="btn btn--lg pill-radius btn--plain">Attach file(s)</label>
+             
+            </div>
+            <div class="col-md-6 col-xl-6 text-right">
+                <button type="submit" class="btn btn--green btn--lg pill-radius" data-ng-disabled="caseDetailsForm.$invalid || fileUploading" data-ng-click="$ctrl.add(caseFormData, patent)">
+                    Add
+                </button>
+            </div>        
+        </div> 
+    </form>
+</div>

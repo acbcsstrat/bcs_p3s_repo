@@ -1,0 +1,47 @@
+<div class="modal-header d-flex flex-column align-items-stretch">
+	<p class="font-h2 font-weight-bold m-b-xs">Requesting assisted formality filing</p>
+	<p class="m-b-xs">Please read and understand the two sections below regarding requesting assisted formality filing.</p>
+	<div class="row">
+		<div class="col-md-6 col-xl-6">
+			<p class="font-h4 m-b-xs font-weight-bold">Additional costs</p>
+			<p>Our team of IP professionals are here ready to prepare and review your cases formalities on your request. As this service requires manual intervention from a member of our team, additional fees are added to the standard self-filing fee. The additional supported fee table is displayed below:</p>
+			<table class="t-data m-t-sm">
+				<tr class="t-data__row">
+					<td class="t-data__td t-data__td--no-side-padding font-weight-bold">Formality</td>
+					<td class="t-data__td t-data__td--no-side-padding font-weight-bold">Fee</td>
+				</tr>
+				<tr class="t-data__row">
+					<td class="t-data__td t-data__td--no-side-padding">Euro-PCT filing:</td>
+					<td class="t-data__td t-data__td--no-side-padding">$ {{$ctrl.feeOject.epctSupportFee}}</td>
+				</tr>
+				<tr class="t-data__row">
+					<td class="t-data__td t-data__td--no-side-padding">Grant, Rule 71(3):</td>
+					<td class="t-data__td t-data__td--no-side-padding">$ {{$ctrl.feeOject.grantSupportFee}}</td>
+				</tr>				
+				<tr>
+					<td class="t-data__td t-data__td--no-side-padding">EP Validation:</td>				
+<!-- 					<table> -->
+						<tr>
+							<td>- Each London Agreement Country:</td>
+							<td>$ {{$ctrl.feeOject.valLondonSupportFee}}</td>
+						</tr>
+						<tr>
+							<td>- Each Non-London Agreement Country:</td>
+							<td>$ {{$ctrl.feeOject.valAnySupportFee}}</td>
+						</tr>						
+			<!-- 		</table>
+ -->				</tr>
+			</table>
+		</div>
+		<div class="col-md-6 col-xl-6">
+			<p class="font-h4 m-b-xs font-weight-bold">Accessing your account</p>
+			<p>In order for Patent Place to manually prepare formalities on your behalf, one of our IP professionals will need to be granted temporary access to your account in order to carry out the necessary work.</p>
+			<p class="m-t-sm">Once the required formality work has been completed, the temporary access will be removed.</p>
+		</div>		
+	</div>
+	<div class="row d-flex m-t-sm ">
+		<div class="col-md-12 col-xl-12 text-center">
+			<button class="btn btn--green btn--lg pill-radius" data-ng-click="$ctrl.dismissModal()">Dismiss</button>
+		</div>
+	</div>
+</div>
