@@ -123,7 +123,7 @@ export default function RemindersController(caseSelected, $scope, $rootScope, $u
 
     function updateNotificationsSuccess() {
         var modalInstance = $uibModal.open({
-            template: require('html-loader!../html/modals/modal.update-epct-notifications-success.tpl.htm'), //create html for notifications update success
+            template: require('html-loader!../html/modals/modal.update-epct-notifications-success.tpl.htm').default, //create html for notifications update success
             appendTo: undefined,
             backdropClass: 'second-backdrop',
             controllerAs: '$ctrl',
@@ -139,7 +139,7 @@ export default function RemindersController(caseSelected, $scope, $rootScope, $u
     function updateNotificationsError(errResponse) {
 
         var modalInstance = $uibModal.open({
-            template: require('html-loader!../html/modals/modal.update-epct-notifications-error.tpl.htm'), //create html for notifications update fail
+            template: require('html-loader!../html/modals/modal.update-epct-notifications-error.tpl.htm').default, //create html for notifications update fail
             appendTo: undefined,
             backdropClass: 'second-backdrop',
             controllerAs: '$ctrl',

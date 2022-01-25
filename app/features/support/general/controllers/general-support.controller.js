@@ -75,7 +75,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 					if(cat == 'Assisted Formality Filing' && !assistedFormaltyAgreement && response.patentEnquiries.length > 0 && !$stateParams.supportObj) {
 						assistedFormaltyAgreement = true;
 				        var modalInstance = $uibModal.open({
-				            template: require('html-loader!../html/modals/modal.assisted-formality-details.tpl.htm'),
+				            template: require('html-loader!../html/modals/modal.assisted-formality-details.tpl.htm').default,
 				            scope: $scope,
 				            controllerAs:'$ctrl',
 				            backdrop: 'static',
@@ -185,7 +185,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	function warningCheckboxChange(newValue, oldValue) {
 
         var modalInstance = $uibModal.open({
-            template: require('html-loader!../html/modals/modal.loss-of-data.tpl.htm'),
+            template: require('html-loader!../html/modals/modal.loss-of-data.tpl.htm').default,
             scope: $scope,
             controllerAs:'$ctrl',
             backdrop: 'static',
@@ -227,7 +227,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	function warningCategoryChange(newValue, oldValue) {
 
         var modalInstance = $uibModal.open({
-            template: require('html-loader!../html/modals/modal.loss-of-data.tpl.htm'),
+            template: require('html-loader!../html/modals/modal.loss-of-data.tpl.htm').default,
             scope: $scope,
             controllerAs:'$ctrl',
             backdrop: 'static',
@@ -340,7 +340,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 
 		   	if(checkDuplicate(e.files[i], caseSpecific)) {
 		        var modalInstance = $uibModal.open({
-		            template: require('html-loader!../html/modals/modal.duplicate-file.tpl.htm'),
+		            template: require('html-loader!../html/modals/modal.duplicate-file.tpl.htm').default,
 		            scope: $scope,
 		            controllerAs:'$ctrl',
 		            controller: ['$uibModalInstance', function($uibModalInstance) {
@@ -410,7 +410,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 		}
 
         var modalInstance = $uibModal.open({
-            template: require('html-loader!../html/modals/modal.add-information-for-case.tpl.htm'),
+            template: require('html-loader!../html/modals/modal.add-information-for-case.tpl.htm').default,
             scope: $scope,
             controllerAs:'$ctrl',
             backdrop: 'static',
@@ -514,7 +514,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 					$scope.specificSupportForm.$setPristine();
 					
 			        var modalInstance = $uibModal.open({
-			            template: require('html-loader!../html/modals/modal.support-success.tpl.htm'),
+			            template: require('html-loader!../html/modals/modal.support-success.tpl.htm').default,
 			            scope: $scope,
 			            controllerAs:'$ctrl',
 			            controller: ['$uibModalInstance', function($uibModalInstance) {
@@ -536,7 +536,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 					vm.submittingRequest = false;
 
 			        var modalInstance = $uibModal.open({
-			            template: require('html-loader!../html/modals/modal.support-error.tpl.htm'),
+			            template: require('html-loader!../html/modals/modal.support-error.tpl.htm').default,
 			            scope: $scope,
 			            controllerAs:'$ctrl',
 			            controller: ['$uibModalInstance', function($uibModalInstance) {
@@ -580,7 +580,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 					vm.submittingRequest = false;
 
 			        var modalInstance = $uibModal.open({
-			            template: require('html-loader!../html/modals/modal.support-success.tpl.htm'),
+			            template: require('html-loader!../html/modals/modal.support-success.tpl.htm').default,
 			            scope: $scope,
 			            backdrop: 'static',
 			            keyboard: false,  			            
@@ -606,7 +606,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 					vm.submittingRequest = false;
 
 			        var modalInstance = $uibModal.open({
-			            template: require('html-loader!../html/modals/modal.support-error.tpl.htm'),
+			            template: require('html-loader!../html/modals/modal.support-error.tpl.htm').default,
 			            scope: $scope,
 			            controllerAs:'$ctrl',
 			            controller: ['$uibModalInstance', function($uibModalInstance) {

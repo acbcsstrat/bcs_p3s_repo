@@ -10,7 +10,7 @@ export default function CaseDetailsController(caseSelected, $scope, $state, Case
     function updatePatentSuccess() {
 
         var modalInstance = $uibModal.open({
-            template: require('html-loader!../html/modals/modal.update-patent-success.tpl.htm'),
+            template: require('html-loader!../html/modals/modal.update-patent-success.tpl.htm').default,
             appendTo: undefined,
             backdropClass: 'second-backdrop',
             controllerAs: '$ctrl',
@@ -29,7 +29,7 @@ export default function CaseDetailsController(caseSelected, $scope, $state, Case
     function updatePatentError() {
 
         var modalInstance = $uibModal.open({
-            template: require('html-loader!../html/modals/modal.update-patent-error.tpl.htm'),
+            template: require('html-loader!../html/modals/modal.update-patent-error.tpl.htm').default,
             appendTo: undefined,
             backdropClass: 'second-backdrop',
             controllerAs: '$ctrl',

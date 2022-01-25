@@ -8,6 +8,7 @@ export default function LoginController($state, $rootScope, $http, $scope, $time
     vm.credentials = {};
     vm.incorrectCredentials = false;
     var dataLoadingTimeout;
+    vm.logo = require('../../../../assets/imgs/logos/pp-logo-text-black.png')
 
     function init() {
         Idle.unwatch()

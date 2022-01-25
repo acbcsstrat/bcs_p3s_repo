@@ -15,7 +15,17 @@ function ValidationService($http, $q, Upload) {
 	}
 
 	function poaUploadSuccessNotify(id) {
+    var deferred = $q.defer();
 		$http.post(ppdomain+'rest-validation-uploadPOACompleted/'+id)
+    .then(
+      function(response){
+        deferred.resolve(response)
+      },
+      function(errReponse){
+        deferred.reject(errResponse)
+      }
+    )
+    return deferred.promise;
 	}
 
 	function poaUploadFailNotify(id) {

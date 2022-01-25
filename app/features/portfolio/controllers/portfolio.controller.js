@@ -244,7 +244,7 @@ export default function PortfolioController($scope, $state, $stateParams, $rootS
 
                         $scope.openConfirmModal = function(patent) {
                             var modalInstance = $uibModal.open({
-                                template: require('html-loader!../html/modals/modal.confirm-found-patent.tpl.htm'),
+                                template: require('html-loader!../html/modals/modal.confirm-found-patent.tpl.htm').default,
                                 appendTo: undefined,
                                 controllerAs: '$ctrl',
                                 controller: ['$uibModalInstance', '$location', '$anchorScroll', function($uibModalInstance, $location, $anchorScroll) {
@@ -301,7 +301,7 @@ export default function PortfolioController($scope, $state, $stateParams, $rootS
                     // animation: panelAnimation,
                     hasBackdrop: true,
                     targetEvent: $event,
-                    template: require('html-loader!../html/add-patent.tpl.htm'),
+                    template: require('html-loader!../html/add-patent.tpl.htm').default,
                     clickOutsideToClose: true,
                     escapeToClose: true,
                     focusOnOpen: true

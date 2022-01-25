@@ -194,7 +194,7 @@ export default function RegisterController($scope, $state, $http, $uibModal, $ti
                     vm.dataLoading = false;
                     if(data.response === 'success') {
                         var modalInstance = $uibModal.open({
-                            template: require('html-loader!../html/modals/modal.register-success.tpl.htm'),
+                            template: require('html-loader!../html/modals/modal.register-success.tpl.htm').default,
                             appendTo: undefined,
                             controllerAs: '$ctrl',
                             controller: ['$uibModalInstance', '$location', '$anchorScroll', function($uibModalInstance, $location, $anchorScroll) {
@@ -212,7 +212,7 @@ export default function RegisterController($scope, $state, $http, $uibModal, $ti
                         vm.dataLoading = false;
                         $state.go($state.current, {}, {reload: true});
                         var modalInstance = $uibModal.open({
-                            template: require('html-loader!../html/modals/modal.register-error.tpl.htm'),
+                            template: require('html-loader!../html/modals/modal.register-error.tpl.htm').default,
                             appendTo: undefined,
                             controllerAs: '$ctrl',
                             controller: ['$uibModalInstance', '$location', '$anchorScroll', function($uibModalInstance, $location, $anchorScroll) {
@@ -233,7 +233,7 @@ export default function RegisterController($scope, $state, $http, $uibModal, $ti
                     vm.dataLoading = false;
                     $state.go($state.current, {}, {reload: true});
                     var modalInstance = $uibModal.open({
-                        template: require('html-loader!../html/modals/modal.register-error.tpl.htm'),
+                        template: require('html-loader!../html/modals/modal.register-error.tpl.htm').default,
                         appendTo: undefined,
                         controllerAs: '$ctrl',
                         controller: ['$uibModalInstance', '$location', '$anchorScroll', function($uibModalInstance, $location, $anchorScroll) {

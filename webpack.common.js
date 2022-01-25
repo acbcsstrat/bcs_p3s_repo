@@ -16,10 +16,10 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, "./dist"),
-        filename: '[name].[contentHash].js'
+        filename: '[name].[fullhash].js'
     },
     optimization: {
-        moduleIds: 'hashed',
+        moduleIds: 'deterministic',
         runtimeChunk: 'single',
         splitChunks: { //extract third-party libraries, such as lodash or react, to a separate vendor chunk as they are less likely to change than our local source code
             chunks: 'all',
@@ -42,11 +42,11 @@ module.exports = {
         {
           test: /\.(png|jpg|gif|woff|woff2|eot|ttf|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
           use: [
-              'file-loader',
               {
-                  loader: 'image-webpack-loader',
+                  loader: 'file-loader',
                   options: {
-                      bypassOnDebug: true,
+                      bypassOnDebug: true,  
+                      esModule: false
                   },
               },            
           ]
@@ -54,14 +54,16 @@ module.exports = {
         { 
           test: /\.(html|tpl)$/, 
           loader: 'html-loader',
-          options: { esModule: false } 
+          options: {
+              esModule: false
+          },          
         },
         {
           test: /\.css$/,
           use: [
             { 
               loader: MiniCssExtractPlugin.loader, 
-              options: { sourceMap: true,         esModule: false } 
+              options: { sourceMap: true } 
             },
             { loader: 'css-loader', options: { url: false, sourceMap: true } },
             { 

@@ -109,7 +109,7 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
     function confirmRequestForSupport(obj) {
 
         var modalInstance = $uibModal.open({
-            template: require('html-loader!../html/modals/modal.confirm-requesting-assitance.tpl.htm'),
+            template: require('html-loader!../html/modals/modal.confirm-requesting-assitance.tpl.htm').default,
             scope: $scope,
             controllerAs:'$ctrl',
             backdrop: 'static',
@@ -141,7 +141,7 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
             confirmRequestForSupport(requestObj)
         } else {
             var modalInstance = $uibModal.open({
-                template: require('html-loader!../html/modals/modal.assisted-formality-details.tpl.htm'),
+                template: require('html-loader!../html/modals/modal.assisted-formality-details.tpl.htm').default,
                 scope: $scope,
                 controllerAs:'$ctrl',
                 backdrop: 'static',
@@ -300,7 +300,7 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
     function confirmDeletePatent(patent) {
 
         var modalInstance = $uibModal.open({
-            template: require('html-loader!../html/modals/modal.confirm-delete-patent.tpl.htm'),
+            template: require('html-loader!../html/modals/modal.confirm-delete-patent.tpl.htm').default,
             appendTo: undefined,
             backdropClass: 'second-backdrop',
             controllerAs: '$ctrl',
@@ -362,7 +362,7 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
 
         if(errResponse.status === 304) {
             var modalInstance = $uibModal.open({
-                template: require('html-loader!../html/modals/modal.delete-patent-error-trans.tpl.htm'),
+                template: require('html-loader!../html/modals/modal.delete-patent-error-trans.tpl.htm').default,
                 appendTo: undefined,
                 controllerAs: '$ctrl',
                 controller: ['$uibModalInstance', function($uibModalInstance) {
@@ -376,7 +376,7 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
             });
         } else {
             var modalInstance = $uibModal.open({
-                template: require('html-loader!../html/modals/modal.delete-patent-error.tpl.htm'),
+                template: require('html-loader!../html/modals/modal.delete-patent-error.tpl.htm').default,
                 appendTo: undefined,
                 controllerAs: '$ctrl',
                 controller: ['$uibModalInstance', function($uibModalInstance) {

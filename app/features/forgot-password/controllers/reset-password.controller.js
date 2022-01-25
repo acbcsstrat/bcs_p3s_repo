@@ -50,7 +50,7 @@ export default function ResestPasswordController($state, $rootScope, $http, $sco
 			function(response){
                 vm.dataLoading = false;
                 var modalInstance = $uibModal.open({
-                    template: require('html-loader!../html/modals/modal.reset-password-success.tpl.htm'),
+                    template: require('html-loader!../html/modals/modal.reset-password-success.tpl.htm').default,
                     appendTo: undefined,
                     controllerAs: '$ctrl',
                     controller: ['$uibModalInstance', '$location', '$anchorScroll', function($uibModalInstance, $location, $anchorScroll) {
@@ -69,7 +69,7 @@ export default function ResestPasswordController($state, $rootScope, $http, $sco
                 vm.dataLoading = false;
                 $state.go($state.current, {}, {reload: true});
                 var modalInstance = $uibModal.open({
-                    template: require('html-loader!../html/modals/modal.reset-password-error.tpl.htm'),
+                    template: require('html-loader!../html/modals/modal.reset-password-error.tpl.htm').default,
                     appendTo: undefined,
                     controllerAs: '$ctrl',
                     controller: ['$uibModalInstance', '$location', '$anchorScroll', function($uibModalInstance, $location, $anchorScroll) {

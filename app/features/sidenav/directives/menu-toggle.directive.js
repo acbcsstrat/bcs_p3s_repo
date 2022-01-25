@@ -9,7 +9,7 @@ function menuToggle() {
             section: '=',
             context: '='
         },
-        template: require('html-loader!../html/sidenav-nav-li.tpl.htm'),
+        template: require('html-loader!../html/sidenav-nav-li.tpl.htm').default,
         link: function($scope, $element) {
             var controller = $scope.context
 

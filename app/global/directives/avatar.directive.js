@@ -3,13 +3,15 @@ avatarImg.$inject = ['$http'];
 function avatarImg($http) {
 	return {
 		restrict: 'AE',
-		template: require('html-loader!./html/avatar.tpl.htm'),
+		template: require('html-loader!./html/avatar.tpl.htm').default,
 		link: function(scope, elem, attr) {
 
 			$http.get('../avatar-image/')
 			.then(
 				function(response){
+          console.log()
 					if(response.data == '' || response.data == undefined) {
+            scope.defaultAvatar = '../media/avatar-default.png';
 						scope.avatarImg = null;
 					}
 					else {

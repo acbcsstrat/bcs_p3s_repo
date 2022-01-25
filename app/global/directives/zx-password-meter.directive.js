@@ -6,7 +6,7 @@ function zxPasswordMeter($compile) {
           value: "@",
           max: "@?"
         },
-        template: require("html-loader!./html/password-meter.tpl.htm"),
+        template: require("html-loader!./html/password-meter.tpl.htm").default,
         link: function(scope) {
 
           scope.type = 'danger';

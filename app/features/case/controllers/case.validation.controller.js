@@ -11,15 +11,15 @@ export default function ValidationController(caseSelected, $scope, $uibModal, $s
     vm.submitPoaDocuments = submitPoaDocuments;
     vm.patent = '';
     vm.templates = [
-        { name: 'validationAvailable', url: require('html-loader!../html/validation/validation-available.tpl.htm')},
-        { name: 'quotePending', url: require('html-loader!../html/validation/validation-quote-pending.tpl.htm')},
-        { name: 'quoteProvided', url: require('html-loader!../html/validation/validation-quote-provided.tpl.htm')},
-        { name: 'paymentInProgress', url: require('html-loader!../html/validation/validation-payment-in-progress.tpl.htm')},
-        { name: 'poasProvided', url: require('html-loader!../html/validation/validation-poa-available.tpl.htm')},
-        { name: 'noPoasProvided', url: require('html-loader!../html/validation/validation-nopoas-required.tpl.htm')},
-        { name: 'workInProgress', url: require('html-loader!../html/validation/validation-wip.tpl.htm')},
-        { name: 'manual', url: require('html-loader!../html/validation/validation-manual.tpl.htm')},
-        { name: 'completed', url: require('html-loader!../html/validation/validation-completed.tpl.htm')}
+        { name: 'validationAvailable', url: require('html-loader!../html/validation/validation-available.tpl.htm').default},
+        { name: 'quotePending', url: require('html-loader!../html/validation/validation-quote-pending.tpl.htm').default},
+        { name: 'quoteProvided', url: require('html-loader!../html/validation/validation-quote-provided.tpl.htm').default},
+        { name: 'paymentInProgress', url: require('html-loader!../html/validation/validation-payment-in-progress.tpl.htm').default},
+        { name: 'poasProvided', url: require('html-loader!../html/validation/validation-poa-available.tpl.htm').default},
+        { name: 'noPoasProvided', url: require('html-loader!../html/validation/validation-nopoas-required.tpl.htm').default},
+        { name: 'workInProgress', url: require('html-loader!../html/validation/validation-wip.tpl.htm').default},
+        { name: 'manual', url: require('html-loader!../html/validation/validation-manual.tpl.htm').default},
+        { name: 'completed', url: require('html-loader!../html/validation/validation-completed.tpl.htm').default}
     ];
 
     $scope.formData = {};
@@ -38,6 +38,8 @@ export default function ValidationController(caseSelected, $scope, $uibModal, $s
     }
 
     function init() {
+
+        console.log('reloaded')
 
         $scope.isChecked = true;
         vm.patent = caseSelected; 
@@ -157,7 +159,7 @@ export default function ValidationController(caseSelected, $scope, $uibModal, $s
     function requestNewQuote() {
 
         var modalInstance = $uibModal.open({
-            template: require('html-loader!../html/modals/modal.validation-confirm-deletion.tpl.htm'),
+            template: require('html-loader!../html/modals/modal.validation-confirm-deletion.tpl.htm').default,
             appendTo: undefined,
             backdropClass: 'second-backdrop',
             controllerAs: '$ctrl',
@@ -220,41 +222,56 @@ export default function ValidationController(caseSelected, $scope, $uibModal, $s
         $q.all(promiseArray)
         .then(
             function(response){
+              console.log('should hitaroo')
                 ValidationService.poaUploadSuccessNotify(caseSelected.patentID)
-                var modalInstance = $uibModal.open({
-                    template: require('html-loader!../html/modals/modal.validation-poas-submitted.tpl.htm'),
-                    appendTo: undefined,
-                    backdropClass: 'second-backdrop',
-                    controllerAs: '$ctrl',
-                    controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+                .then(
+                  function(x){
+                    var modalInstance = $uibModal.open({
+                        template: require('html-loader!../html/modals/modal.validation-poas-submitted.tpl.htm').default,
+                        appendTo: undefined,
+                        backdropClass: 'second-backdrop',
+                        controllerAs: '$ctrl',
+                        controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
 
-                        this.dismissModal = function() {
-                            $uibModalInstance.close();
-                        };
+                            this.dismissModal = function() {
+                                $uibModalInstance.close();
+                            };
 
-                    }]
-                });
+                        }]
+                    });
+                    $state.go('portfolio.modal.case', {caseId: caseSelected.patentID, prepareGrant: 0, form1200generate: 0, validationQuote: 1}, {reload: true})
+                  }, function(e){
+                      
+                  }
+                )
 
-                $state.go('portfolio.modal.case', {caseId: caseSelected.patentID, prepareGrant: 0, form1200generate: 0, validationQuote: 1}, {reload: true})
+                
             },
             function(errResponse){
 
                 ValidationService.poaUploadFailNotify(caseSelected.patentID)
-                var modalInstance = $uibModal.open({
-                    template: require('html-loader!../html/modals/modal.validation-poas-submitted-error.tpl.htm'),
-                    appendTo: undefined,
-                    backdropClass: 'second-backdrop',
-                    controllerAs: '$ctrl',
-                    controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+                .then(
+                  function(x){
+                    $state.go('portfolio.modal.case', {caseId: caseSelected.patentID, prepareGrant: 0, form1200generate: 0, validationQuote: 1}, {reload: true})
+                    var modalInstance = $uibModal.open({
+                        template: require('html-loader!../html/modals/modal.validation-poas-submitted-error.tpl.htm').default,
+                        appendTo: undefined,
+                        backdropClass: 'second-backdrop',
+                        controllerAs: '$ctrl',
+                        controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
 
-                        this.dismissModal = function() {
-                            $uibModalInstance.close();
-                        };
+                            this.dismissModal = function() {
+                                $uibModalInstance.close();
+                            };
 
-                    }]
-                });
+                        }]
+                    });
+                  }, function(e){
+                      
+                  }
+                )                
 
-                $state.go('portfolio.modal.case', {caseId: caseSelected.patentID, prepareGrant: 0, form1200generate: 0, validationQuote: 1}, {reload: true})
+                
             }
         )
 
@@ -302,7 +319,7 @@ export default function ValidationController(caseSelected, $scope, $uibModal, $s
             function(response){
 
                 var modalInstance = $uibModal.open({
-                    template: require('html-loader!../html/modals/modal.validation-quote-requested.tpl.htm'),
+                    template: require('html-loader!../html/modals/modal.validation-quote-requested.tpl.htm').default,
                     appendTo: undefined,
                     backdropClass: 'second-backdrop',
                     controllerAs: '$ctrl',
@@ -319,7 +336,7 @@ export default function ValidationController(caseSelected, $scope, $uibModal, $s
             },
             function(errResponse) {
                 var modalInstance = $uibModal.open({
-                    template: require('html-loader!../html/modals/modal.validation-quote-failed.tpl.htm'),
+                    template: require('html-loader!../html/modals/modal.validation-quote-failed.tpl.htm').default,
                     appendTo: undefined,
                     backdropClass: 'second-backdrop',
                     controllerAs: '$ctrl',

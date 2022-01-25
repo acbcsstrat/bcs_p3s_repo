@@ -37,7 +37,7 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
     $stateProvider
     .state('login', {
         url: '/login',
-        template: require('html-loader!./features/login/html/login.tpl.htm'),
+        template: require('html-loader!./features/login/html/login.tpl.htm').default,
         controller: 'LoginController',
         controllerAs: '$ctrl',
         lazyLoad: function($transition$) {
@@ -56,7 +56,7 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
     }) 
     .state('forgot-password', {
         url: '/forgot-password',
-        template: require('html-loader!./features/forgot-password/html/forgot-password.tpl.htm'),
+        template: require('html-loader!./features/forgot-password/html/forgot-password.tpl.htm').default,
         controller: 'ForgotPasswordController',
         controllerAs: '$ctrl',
         lazyLoad: function($transition$) {
@@ -74,7 +74,7 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
     })    
     .state('reset-password', {
         url: '/prelogin/reset-password/{path:.*}',
-        template: require('html-loader!./features/forgot-password/html/reset-password.tpl.htm'),
+        template: require('html-loader!./features/forgot-password/html/reset-password.tpl.htm').default,
         controller: 'ResetPasswordController',
         controllerAs: '$ctrl',
         resolve: {
@@ -106,7 +106,7 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
                         console.error('Error submitting request. Error : ', errResponse)
 
                         var modalInstance = $uibModal.open({
-                            template: require('html-loader!./features/forgot-password/html/modals/modal.reset-password-verification-error.tpl.htm'),
+                            template: require('html-loader!./features/forgot-password/html/modals/modal.reset-password-verification-error.tpl.htm').default,
                             appendTo: undefined,
                             controllerAs: '$ctrl',
                             controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
@@ -139,7 +139,7 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
     })     
     .state('register', {
         url: '/register',
-        template: require('html-loader!./features/register/html/register.tpl.htm'),
+        template: require('html-loader!./features/register/html/register.tpl.htm').default,
         controller: 'RegisterController',
         controllerAs: '$ctrl',
         lazyLoad: function($transition$) {
@@ -159,7 +159,7 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
     })
     .state('new-user-verify', {
         url: '/prelogin/new-user-verify/{path:.*}',
-        template: require('html-loader!./features/register/html/verification.tpl.htm'),
+        template: require('html-loader!./features/register/html/verification.tpl.htm').default,
         controller: 'VerifyAccountController',
         controllerAs: '$ctrl',
         lazyLoad: function($transition$) {
@@ -199,7 +199,7 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
                     .then(
                         function(response){
                             var modalInstance = $uibModal.open({
-                                template: require('html-loader!./features/register/html/modals/modal.verify-success.tpl.htm'),
+                                template: require('html-loader!./features/register/html/modals/modal.verify-success.tpl.htm').default,
                                 appendTo: undefined,
                                 controllerAs: '$ctrl',
                                 controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
@@ -218,7 +218,7 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
 
                             
                             var modalInstance = $uibModal.open({
-                                template: require('html-loader!./features/register/html/modals/modal.verify-error.tpl.htm'),
+                                template: require('html-loader!./features/register/html/modals/modal.verify-error.tpl.htm').default,
                                 appendTo: undefined,
                                 controllerAs: '$ctrl',
                                 controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
@@ -236,7 +236,7 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
                     )
                 } else {
                     var modalInstance = $uibModal.open({
-                        template: require('html-loader!./features/register/html/modals/modal.verify-error.tpl.htm'),
+                        template: require('html-loader!./features/register/html/modals/modal.verify-error.tpl.htm').default,
                         appendTo: undefined,
                         controllerAs: '$ctrl',
                         controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
@@ -255,7 +255,7 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
     })    
     .state('profile', {
         url: '/profile',
-        template: require('html-loader!./features/profile/html/profile.tpl.htm'),
+        template: require('html-loader!./features/profile/html/profile.tpl.htm').default,
         controller: 'ProfileController',
         controllerAs: '$ctrl',
         lazyLoad: function($transition$) {
@@ -277,7 +277,7 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
     })    
     .state('dashboard', {
         url: '/dashboard',
-        template: require('html-loader!./features/dashboard/html/dashboard.tpl.htm'),
+        template: require('html-loader!./features/dashboard/html/dashboard.tpl.htm').default,
         controller: 'DashboardController',
         controllerAs: '$ctrl',
         lazyLoad: function($transition$) {
@@ -311,38 +311,38 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
             'actionsavailable@dashboard': {
                 controller: 'AvailableActionsController',
                 controllerAs: '$ctrl',
-                template: require('html-loader!./features/dashboard/html/dashboard.actions-available.tpl.htm')
+                template: require('html-loader!./features/dashboard/html/dashboard.actions-available.tpl.htm').default
             },           
             'fxchartwidget@dashboard': {
                 controller: 'DbFxChartController',
                 controllerAs: '$ctrl',
-                template: require('html-loader!./features/dashboard/html/dashboard.fxchart-widget.tpl.htm')
+                template: require('html-loader!./features/dashboard/html/dashboard.fxchart-widget.tpl.htm').default
             },
             'europctsgraph@dashboard': {
                 controller: 'EuropctsDonutController',
                 controllerAs: '$ctrl',
-                template: require('html-loader!./features/dashboard/html/dashboard.europcts-graph.tpl.htm')     
+                template: require('html-loader!./features/dashboard/html/dashboard.europcts-graph.tpl.htm').default     
             },
             'renewalsgraph@dashboard': {
                 controller: 'RenewalsDonutController',
                 controllerAs: '$ctrl',
-                template: require('html-loader!./features/dashboard/html/dashboard.renewals-graph.tpl.htm')
+                template: require('html-loader!./features/dashboard/html/dashboard.renewals-graph.tpl.htm').default
             },                
             'grantsgraph@dashboard': {
                 controller: 'GrantsDonutController',
                 controllerAs: '$ctrl',
-                template: require('html-loader!./features/dashboard/html/dashboard.grants-graph.tpl.htm')
+                template: require('html-loader!./features/dashboard/html/dashboard.grants-graph.tpl.htm').default
             },
             'validationsgraph@dashboard': {
                 controller: 'ValidationsDonutController',
                 controllerAs: '$ctrl',
-                template: require('html-loader!./features/dashboard/html/dashboard.validations-graph.tpl.htm')
+                template: require('html-loader!./features/dashboard/html/dashboard.validations-graph.tpl.htm').default
             }                          
         }
     })
     .state('portfolio', {
         url: '/portfolio',
-        template: require('html-loader!./features/portfolio/html/portfolio.tpl.htm'),
+        template: require('html-loader!./features/portfolio/html/portfolio.tpl.htm').default,
         controller: 'PortfolioController',
         controllerAs: '$ctrl',
         lazyLoad: function($transition$) {
@@ -402,54 +402,54 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
         },      
         views:{
             "": {
-                template: require('html-loader!./features/case/html/case.overview.tpl.htm'),
+                template: require('html-loader!./features/case/html/case.overview.tpl.htm').default,
                 controller: 'CaseOverviewController',
                 controllerAs: '$ctrl',
             },
             "details@portfolio.modal.case": {
-                template: require('html-loader!./features/case/html/details/case-details.tpl.htm'),
+                template: require('html-loader!./features/case/html/details/case-details.tpl.htm').default,
                 controller: 'CaseDetailsController',
                 controllerAs: '$ctrl'              
             },
             "reminders@portfolio.modal.case": {
-                template: require('html-loader!./features/case/html/notifications/notifications.tpl.htm'),
+                template: require('html-loader!./features/case/html/notifications/notifications.tpl.htm').default,
                 controller: 'RemindersController',
                 controllerAs: '$ctrl',                 
             },
             "form1200@portfolio.modal.case": {
-                template: require('html-loader!./features/case/html/europct/europct.form1200.tpl.htm'),
+                template: require('html-loader!./features/case/html/europct/europct.form1200.tpl.htm').default,
                 controller: 'Form1200ReadyController',
                 controllerAs: '$ctrl'                
 
             },           
             "renewalhistory@portfolio.modal.case": {
-                template: require('html-loader!./features/case/html/renewal/renewal.history.tpl.htm'),
+                template: require('html-loader!./features/case/html/renewal/renewal.history.tpl.htm').default,
                 controller: 'RenewalHistoryController',
                 controllerAs: '$ctrl'                
 
             },        
             "grantandpublishing@portfolio.modal.case": {
-                template: require('html-loader!./features/case/html/grant/grant.tpl.htm'),
+                template: require('html-loader!./features/case/html/grant/grant.tpl.htm').default,
                 controller: 'GrantController',
                 controllerAs: '$ctrl'                
             },      
             "validation@portfolio.modal.case": {
-                template: require('html-loader!./features/case/html/validation/validation.tpl.htm'),
+                template: require('html-loader!./features/case/html/validation/validation.tpl.htm').default,
                 controller: 'ValidationController',
                 controllerAs: '$ctrl'                
             },                                                
             "fee-breakdown@portfolio.modal.case": {
-                template: require('html-loader!./features/case/html/feebreakdown/fee-breakdown.tpl.htm'),
+                template: require('html-loader!./features/case/html/feebreakdown/fee-breakdown.tpl.htm').default,
                 controller: 'FeeBreakDownController',
                 controllerAs: '$ctrl'                
             },
             "fxchart@portfolio.modal.case": {
-                template: require('html-loader!./features/case/html/fxchart/fxchart.tpl.htm'),
+                template: require('html-loader!./features/case/html/fxchart/fxchart.tpl.htm').default,
                 controller: 'FxChartController',
                 controllerAs: '$ctrl'  
             },
             "costchart@portfolio.modal.case": {
-                template: require('html-loader!./features/case/html/costchart/costchart.tpl.htm'),
+                template: require('html-loader!./features/case/html/costchart/costchart.tpl.htm').default,
                 controller: 'CostChartController',
                 controllerAs: '$ctrl'                
             }
@@ -466,7 +466,7 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
     })
     .state('transactions', {
         url: '/transactions',
-        template: require('html-loader!./features/transactions/html/transactions.tpl.htm'),
+        template: require('html-loader!./features/transactions/html/transactions.tpl.htm').default,
         controller: 'TransactionsController',
         controllerAs: '$ctrl',
         lazyLoad: function($transition$) {
@@ -514,12 +514,12 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
         },        
         views: {
             "" : {
-                template: require('html-loader!./features/transactions/html/transaction-item.tpl.htm'),
+                template: require('html-loader!./features/transactions/html/transaction-item.tpl.htm').default,
                 controller: 'TransactionItemController',
                 controllerAs: '$ctrl',                    
             },
             "details@transactions.modal.transaction-item" : {
-                template: require('html-loader!./features/transactions/html/transaction-item.details.tpl.htm'),
+                template: require('html-loader!./features/transactions/html/transaction-item.details.tpl.htm').default,
                 controller: 'TransactionDetailsController',
                 controllerAs: '$ctrl',                    
             }                               
@@ -535,7 +535,7 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
     })
     .state('general-support', {
         url: '/support',
-        template: require('html-loader!./features/support/general/html/general-support.tpl.htm'),
+        template: require('html-loader!./features/support/general/html/general-support.tpl.htm').default,
         controller: 'GeneralSupportController',
         controllerAs: '$ctrl',
         params: {
@@ -556,7 +556,7 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
     })
     .state('basket', {
         url: '/basket',
-        template: require('html-loader!./features/checkout/html/checkout.basket.tpl.htm'),
+        template: require('html-loader!./features/checkout/html/checkout.basket.tpl.htm').default,
         controller: 'BasketController',
         controllerAs: '$ctrl',
         lazyLoad: function($transition$) {
@@ -578,7 +578,7 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
     })
     .state('bank-transfer-preparation', {
         url: '/bank-transfer-preparation',
-        template: require('html-loader!./features/checkout/html/checkout.bank-transfer-preparation.tpl.htm'),
+        template: require('html-loader!./features/checkout/html/checkout.bank-transfer-preparation.tpl.htm').default,
         controller: 'BankTransferPrepController',
         controllerAs: '$ctrl',
         lazyLoad: function($transition$) {
@@ -604,7 +604,7 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
     })
     .state('bank-transfer-success', {
         url: '/bank-transfer-success',
-        template: require('html-loader!./features/checkout/html/checkout.bank-transfer-success.tpl.htm'),            
+        template: require('html-loader!./features/checkout/html/checkout.bank-transfer-success.tpl.htm').default,            
         controller: 'BankTransferSuccessController',
         controllerAs: '$ctrl',
         lazyLoad: function($transition$) {

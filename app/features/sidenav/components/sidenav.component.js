@@ -1,8 +1,12 @@
 export default angular.module('components.sidenav', []).component('sidenav', {
-		template: require('html-loader!../html/sidenav.tpl.htm'),
+		template: require('html-loader!../html/sidenav.tpl.htm').default,
 		controller: ['$scope', '$rootScope', '$mdSidenav', '$timeout', '$http', '$state',  'ProfileService', 'SidenavService',  'ngCart', 'moment', 'FxService', 'AuthorisationService', '$cookies', function($scope, $rootScope, $mdSidenav, $timeout, $http, $state, ProfileService, SidenavService, ngCart, moment, FxService, AuthorisationService, $cookies){
 
 		var vm = this;
+
+    vm.logo = require('../ppIcon-lg.png');
+    vm.logoIcon = require('../ppIcon.png');
+    vm.avatarDefault = require('../avatarDefault.png');
 
 	 	vm.toggleLeft = buildToggler('left');
 	    vm.toggleRight = buildToggler('right');

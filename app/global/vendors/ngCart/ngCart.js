@@ -61,7 +61,7 @@ export default angular.module('ngCart', [directives])
             if(differentTypes(name)) { 
 
                 var modalInstance = $uibModal.open({
-                    template: require('html-loader!./html/modal.validation-in-basket.tpl.htm'),
+                    template: require('html-loader!./html/modal.validation-in-basket.tpl.htm').default,
                     appendTo: undefined,
                     controllerAs: '$ctrl',
                     controller: ['$uibModalInstance', function($uibModalInstance) {
@@ -77,7 +77,7 @@ export default angular.module('ngCart', [directives])
             }
 
             var modalInstance = $uibModal.open({
-                template: require('html-loader!./html/modal.confirm-add-action.tpl.htm'),
+                template: require('html-loader!./html/modal.confirm-add-action.tpl.htm').default,
                 appendTo: undefined,
                 controllerAs: '$ctrl',
                 controller: ['$uibModalInstance', function($uibModalInstance) {
@@ -226,7 +226,7 @@ export default angular.module('ngCart', [directives])
             $rootScope.$broadcast('ngCart:change', {});
             if(patentcase !== true) {            
                 var modalInstance = $uibModal.open({
-                    template: require('html-loader!./html/modal.confirm-remove-action.tpl.htm'),
+                    template: require('html-loader!./html/modal.confirm-remove-action.tpl.htm').default,
                     appendTo: undefined,
                     controllerAs: '$ctrl',
                     controller: ['$uibModalInstance', function($uibModalInstance) {

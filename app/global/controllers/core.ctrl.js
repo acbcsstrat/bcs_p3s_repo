@@ -33,7 +33,7 @@ function coreCtrl($uibModal, $scope,  $state, $timeout, $http, $cookies, $locati
     function welcomeMessageModal() {
 
         var modalInstance = $uibModal.open({
-            template: require('html-loader!../html/modals/modal.welcome-message.tpl.htm'),
+            template: require('html-loader!../html/modals/modal.welcome-message.tpl.htm').default,
             scope: $scope,
             controllerAs:'$ctrl',
             controller: ['$uibModalInstance', function($uibModalInstance) {
@@ -55,7 +55,7 @@ function coreCtrl($uibModal, $scope,  $state, $timeout, $http, $cookies, $locati
 	  	closeModals();
 
 	  	$scope.warning = $uibModal.open({
-		  	template: require('html-loader!../html/modals/modal.idle.tpl.htm'),
+		  	template: require('html-loader!../html/modals/modal.idle.tpl.htm').default,
 	  		windowClass: 'modal-danger',
 			appendTo: undefined
 	    });

@@ -5,7 +5,7 @@ function menuLink() {
         scope: {
             section: '='
         },
-        template: require('html-loader!../html/sidenav-li-item.tpl.htm'),
+        template: require('html-loader!../html/sidenav-li-item.tpl.htm').default,
         link: function ($scope, $element) {
             var controller = $element.parent().controller();
             // $scope.focusSection = function () {

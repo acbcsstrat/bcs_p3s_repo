@@ -4,7 +4,7 @@ function transactionLink($anchorScroll, $state, $location, TransactionService) {
     return {
         transclude: true,
         scope: {},
-        template: require('html-loader!./html/transaction-link.tpl.htm'),
+        template: require('html-loader!./html/transaction-link.tpl.htm').default,
         link: function(scope, elem, attrs) {
 
             $(elem).click(function() {

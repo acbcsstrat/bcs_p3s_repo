@@ -6,7 +6,7 @@ function openHelpPanel($rootScope, $timeout, $cookies) { //1st opens panel
 
 	return {
 		restrict: 'E',
-		template: require('html-loader!./html/open-help-button.tpl.htm'),
+		template: require('html-loader!./html/open-help-button.tpl.htm').default,
 		link: function(scope, elem, attr) {
 
             scope.displayFirstHelp = displayFirstHelp;
@@ -41,7 +41,7 @@ function helpPanel($rootScope, FetchHelpService) { //2nd
     return {
         restrict: 'AE',
         transclude: true,
-        template: require('html-loader!./html/help-panel.tpl.htm'),
+        template: require('html-loader!./html/help-panel.tpl.htm').default,
         link: function(scope, elem, attr) {
            
             var panel = elem[0].querySelector('.help-panel-default');
@@ -88,7 +88,7 @@ function helpPanelGroup($rootScope) {
 
     return {
         restrict: 'AE',
-        template: require('html-loader!./html/help-panel-group.tpl.htm'),
+        template: require('html-loader!./html/help-panel-group.tpl.htm').default,
         transclude: true, //transclude makes the contents of a directive with this option have access to the scope outside of the directive rather than inside.
         scope: {
           heading: '@' //use &attr in the scope option when you want your directive to expose an API for binding to behaviors

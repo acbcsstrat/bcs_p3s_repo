@@ -7,9 +7,9 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
 	vm.patent = caseSelected;
 	vm.initiateGrantOrder = initiateGrantOrder;
     vm.templates = [
-        { name: 'grantintro.html', url:  require('html-loader!../html/grant/grant.intro.tpl.htm')},
-        { name: 'grantquestions.html', url: require('html-loader!../html/grant/grant.questionnaire.tpl.htm')},
-        { name: 'grantgenerated.html', url: require('html-loader!../html/grant/grant.ready.tpl.htm')}
+        { name: 'grantintro.html', url:  require('html-loader!../html/grant/grant.intro.tpl.htm').default},
+        { name: 'grantquestions.html', url: require('html-loader!../html/grant/grant.questionnaire.tpl.htm').default},
+        { name: 'grantgenerated.html', url: require('html-loader!../html/grant/grant.ready.tpl.htm').default}
     ];
     vm.highestPoint = 0;
     vm.uninhibitGrantConfirm = uninhibitGrantConfirm;
@@ -107,7 +107,7 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
             function(response){
 
                 var modalInstance = $uibModal.open({
-                    template:  require('html-loader!../html/modals/modal.grant-order-prepared.tpl.htm'),
+                    template:  require('html-loader!../html/modals/modal.grant-order-prepared.tpl.htm').default,
                     appendTo: undefined,
                     backdropClass: 'second-backdrop',
                     controllerAs: '$ctrl',
@@ -129,7 +129,7 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
 
                     vm.formDataSubmitted = false; 
                     var modalInstance = $uibModal.open({
-                        template:  require('html-loader!../html/modals/modal.grant-order-not-prepared.tpl.htm'),
+                        template:  require('html-loader!../html/modals/modal.grant-order-not-prepared.tpl.htm').default,
                         appendTo: undefined,
                         backdropClass: 'second-backdrop',
                         controllerAs: '$ctrl',
@@ -149,7 +149,7 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
 
                     vm.formDataSubmitted = false; 
                     var modalInstance = $uibModal.open({
-                        template:  require('html-loader!../html/modals/modal.grant-first-mismatch.tpl.htm'),
+                        template:  require('html-loader!../html/modals/modal.grant-first-mismatch.tpl.htm').default,
                         appendTo: undefined,
                         backdropClass: 'second-backdrop',
                         controllerAs: '$ctrl',
@@ -167,7 +167,7 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
 
                 if(errResponse.status == 406 && attempts >= 1) {
                     var modalInstance = $uibModal.open({
-                        template:  require('html-loader!../html/modals/modal.grant-second-mismatch.tpl.htm'),
+                        template:  require('html-loader!../html/modals/modal.grant-second-mismatch.tpl.htm').default,
                         appendTo: undefined,
                         backdropClass: 'second-backdrop',
                         controllerAs: '$ctrl',
@@ -248,7 +248,7 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
     function uninhibitGrantConfirm() {
 
         var modalInstance = $uibModal.open({
-            template:  require('html-loader!../html/modals/modal.confirm-uninhibit-grant-order.tpl.htm'),
+            template:  require('html-loader!../html/modals/modal.confirm-uninhibit-grant-order.tpl.htm').default,
             appendTo: undefined,
             backdropClass: 'second-backdrop',
             controllerAs: '$ctrl',
@@ -261,7 +261,7 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
                         function(response){
                             $state.reload('portfolio.modal.case');
                             var modalInstance = $uibModal.open({
-                                template:  require('html-loader!../html/modals/modal.grant-order-uninhibited.tpl.htm'),
+                                template:  require('html-loader!../html/modals/modal.grant-order-uninhibited.tpl.htm').default,
                                 appendTo: undefined,
                                 backdropClass: 'second-backdrop',
                                 controllerAs: '$ctrl',
@@ -334,7 +334,7 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
     function deleteGrantConfirm() {
 
         var modalInstance = $uibModal.open({
-            template:  require('html-loader!../html/modals/modal.confirm-delete-grant-order.tpl.htm'),
+            template:  require('html-loader!../html/modals/modal.confirm-delete-grant-order.tpl.htm').default,
             appendTo: undefined,
             backdropClass: 'second-backdrop',
             controllerAs: '$ctrl',
@@ -347,7 +347,7 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
                         function(response){
                             $state.reload('portfolio.modal.case');
                             var modalInstance = $uibModal.open({
-                                template:  require('html-loader!../html/modals/modal.grant-order-deleted.tpl.htm'),
+                                template:  require('html-loader!../html/modals/modal.grant-order-deleted.tpl.htm').default,
                                 appendTo: undefined,
                                 backdropClass: 'second-backdrop',
                                 controllerAs: '$ctrl',

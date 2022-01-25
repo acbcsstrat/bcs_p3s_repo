@@ -87,7 +87,7 @@ export default function ProfileController($state, $rootScope, $scope, $timeout, 
 
     function openAvatarModal() {
         var modalInstance = $uibModal.open({
-            template: require('html-loader!../html/modals/modal.upload-avatar-pic.tpl.htm'),
+            template: require('html-loader!../html/modals/modal.upload-avatar-pic.tpl.htm').default,
             appendTo: undefined,
             controller: ['$uibModalInstance', '$scope', function($uibModalInstance, $scope){
 
@@ -154,7 +154,7 @@ export default function ProfileController($state, $rootScope, $scope, $timeout, 
             function(response){  
 
                 var modalInstance = $uibModal.open({
-                    template: require('html-loader!../html/modals/modal.update-profile-success.tpl.htm'),
+                    template: require('html-loader!../html/modals/modal.update-profile-success.tpl.htm').default,
                     appendTo: undefined,
                     controller: ['$uibModalInstance', '$scope', function($uibModalInstance, $scope) {
 
@@ -168,7 +168,7 @@ export default function ProfileController($state, $rootScope, $scope, $timeout, 
             function(errResponse){
                 console.error('Error updating user. Error : ', errResponse)
                 var modalInstance = $uibModal.open({
-                    template: require('html-loader!../html/modals/modal.update-profile-error.tpl.htm'),
+                    template: require('html-loader!../html/modals/modal.update-profile-error.tpl.htm').default,
                     appendTo: undefined,
                     controller: ['$uibModalInstance', '$scope', function($uibModalInstance, $scope) {
 

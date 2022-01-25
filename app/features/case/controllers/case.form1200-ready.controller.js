@@ -10,10 +10,10 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
     vm.initiateForm1200 = initiateForm1200;
     
     vm.templates = [ //compiled with help of dynamic directive
-        { name: 'form1200intro.html', url: require('html-loader!../html/europct/europct.form1200.intro.tpl.htm')},
-        { name: 'form1200questions.html', url: require('html-loader!../html/europct/europct.form1200.questionnaire.tpl.htm')},
-        { name: 'form1200generated.html', url: require('html-loader!../html/europct/europct.form1200.generated.tpl.htm')},
-        { name: 'form1200manual.html', url: require('html-loader!../html/europct/europct.form1200.manual.tpl.htm')}
+        { name: 'form1200intro.html', url: require('html-loader!../html/europct/europct.form1200.intro.tpl.htm').default},
+        { name: 'form1200questions.html', url: require('html-loader!../html/europct/europct.form1200.questionnaire.tpl.htm').default},
+        { name: 'form1200generated.html', url: require('html-loader!../html/europct/europct.form1200.generated.tpl.htm').default},
+        { name: 'form1200manual.html', url: require('html-loader!../html/europct/europct.form1200.manual.tpl.htm').default}
     ];
 
     vm.questionsParam = '';
@@ -104,7 +104,7 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
         vm.displayAmendedUpload = value === true ? true : false;
         if(value) {
             var modalInstance = $uibModal.open({
-                template: require('html-loader!../html/modals/modal.not-checking-claims.tpl.htm'),
+                template: require('html-loader!../html/modals/modal.not-checking-claims.tpl.htm').default,
                 appendTo: undefined,
                 backdropClass: 'second-backdrop',
                 controllerAs: '$ctrl',
@@ -129,7 +129,7 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
 
         if(value === true) {
             var modalInstance = $uibModal.open({
-                template: require('html-loader!../html/modals/modal.not-paying-excess.tpl.htm'),
+                template: require('html-loader!../html/modals/modal.not-paying-excess.tpl.htm').default,
                 appendTo: undefined,
                 backdropClass: 'second-backdrop',
                 controllerAs: '$ctrl',
@@ -206,7 +206,7 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
 
     function cancel1200() {
         var modalInstance = $uibModal.open({
-            template: require('html-loader!../html/modals/modal.confirm-cancel-1200.tpl.htm'),
+            template: require('html-loader!../html/modals/modal.confirm-cancel-1200.tpl.htm').default,
             appendTo: undefined,
             backdropClass: 'second-backdrop',
             controllerAs: '$ctrl',
@@ -261,7 +261,7 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
 
         $scope.formDataSubmitted = false;
         var modalInstance = $uibModal.open({
-            template: require('html-loader!../html/modals/modal.invalid-page-nos.tpl.htm'),
+            template: require('html-loader!../html/modals/modal.invalid-page-nos.tpl.htm').default,
             appendTo: undefined,
             backdropClass: 'second-backdrop',
             controllerAs: '$ctrl',
@@ -340,7 +340,7 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
             function(response){
 
                 var modalInstance = $uibModal.open({
-                    template: require('html-loader!../html/modals/modal.form1200-generating.tpl.htm'), //create html for notifications update success
+                    template: require('html-loader!../html/modals/modal.form1200-generating.tpl.htm').default, //create html for notifications update success
                     appendTo: undefined,
                     backdropClass: 'second-backdrop',
                     controllerAs: '$ctrl',
@@ -359,7 +359,7 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
             function(errResponse){
                 console.error('Error : ', errResponse)
                 var modalInstance = $uibModal.open({
-                    template: require('html-loader!../html/modals/modal.generate-form1200-error.tpl.htm'),
+                    template: require('html-loader!../html/modals/modal.generate-form1200-error.tpl.htm').default,
                     appendTo: undefined,
                     backdropClass: 'second-backdrop',
                     controllerAs: '$ctrl',
