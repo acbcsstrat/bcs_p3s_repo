@@ -24,6 +24,7 @@ export default function RegisterController($scope, $state, $http, $uibModal, $ti
     vm.stage = "";
     vm.formValidation = false;
     vm.passwordUpdate = passwordUpdate;
+    vm.logo = require("../../../../assets/imgs/logos/pp-logo-text-black.png");
 
     function init() {
         Idle.unwatch()
