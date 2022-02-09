@@ -9,9 +9,8 @@ function avatarImg($http) {
 			$http.get('../avatar-image/')
 			.then(
 				function(response){
-          console.log()
 					if(response.data == '' || response.data == undefined) {
-            scope.defaultAvatar = '../media/avatar-default.png';
+            scope.defaultAvatar = require('./media/avatar-default.png');
 						scope.avatarImg = null;
 					}
 					else {
