@@ -39,8 +39,6 @@ export default function ValidationController(caseSelected, $scope, $uibModal, $s
 
     function init() {
 
-        console.log('reloaded')
-
         $scope.isChecked = true;
         vm.patent = caseSelected; 
         $scope.phoneNumber = $scope.ppDetails.partnerPhone;
