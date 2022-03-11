@@ -39,7 +39,7 @@ export default function ValidationController(caseSelected, $scope, $uibModal, $s
 
     function init() {
 
-        $scope.isChecked = true;
+        $scope.isChecked = false;
         vm.patent = caseSelected; 
         $scope.phoneNumber = $scope.ppDetails.partnerPhone;
 
@@ -220,7 +220,7 @@ export default function ValidationController(caseSelected, $scope, $uibModal, $s
         $q.all(promiseArray)
         .then(
             function(response){
-              console.log('should hitaroo')
+
                 ValidationService.poaUploadSuccessNotify(caseSelected.patentID)
                 .then(
                   function(x){
